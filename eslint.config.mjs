@@ -1,19 +1,18 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import prettier from 'eslint-config-prettier';
-import reactPlugin from 'eslint-plugin-react';
+import js from "@eslint/js";
+import globals from "globals";
+import prettier from "eslint-config-prettier";
+import reactPlugin from "eslint-plugin-react";
 
 export default [
   js.configs.recommended,
-  reactPlugin.configs.flat['jsx-runtime'],
+  reactPlugin.configs.flat["jsx-runtime"],
   {
     ...reactPlugin.configs.flat.recommended,
     settings: {
       react: {
-        version: "detect"
-      }
-    }
-
+        version: "detect",
+      },
+    },
   },
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -25,10 +24,7 @@ export default [
         },
       },
     },
-    rules: {
-
-    }
+    rules: {},
   },
   prettier,
-]
-
+];
