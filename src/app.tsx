@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Header } from "./header";
-import { Body } from "./body";
+import { Header } from "./components/header";
+import { Body } from "./components/body";
 
 export const App: FC = () => {
   return (
