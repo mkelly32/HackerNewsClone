@@ -1,12 +1,13 @@
 export type Pages = {
-  [pageNumber: number]: Document;
+  [pageNumber: number]: Submission[];
 };
 
 export type Submission = {
-  id: number;
+  id: string;
   title: string;
   reference: string;
   site: string; //  Unsure about this property
+  timestamp: string;
   score: number;
   author: string;
   comments: number;
