@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { Maybe } from "../types/utils";
 import type { Pages, Submission } from "../types/data";
 
 /**
@@ -13,7 +12,7 @@ type SubmissionTitleData = {
   id: string;
   title: string;
   reference: string;
-  site: string; //  Unsure about this property
+  site: string;
 };
 /**
  *  Extract Submission data from the tile elmenet of a Submission
