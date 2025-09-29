@@ -8,6 +8,13 @@ function pageUrl(pageNumber: number): string {
   return `api/?p=${pageNumber}`;
 }
 
+/**
+ *  Generate submission commments url
+ */
+function getSubmissionCommentsUrl(id: string): string {
+  return `item/?id=${id}`;
+}
+
 type SubmissionTitleData = {
   id: string;
   title: string;
@@ -42,14 +49,14 @@ function getSubtitleData(element: Element): SubmissionSubtitleData {
     ?.getAttribute("title")!;
   const scoreText = element.querySelector(".subline .score")?.innerHTML;
   const score = Number(scoreText?.split(" ")[0] ?? 0);
-  const author = element.querySelector(".subline .hnuser")?.innerHTML!;
+  const user = element.querySelector(".subline .hnuser")?.innerHTML!;
   const sublineLinks = element.querySelectorAll(".subline a");
   const commentsText = sublineLinks[sublineLinks.length - 1].innerHTML;
   const comments = Number(commentsText.split("&nbsp")[0] ?? 0);
   return {
     timestamp,
     score,
-    author,
+    user,
     comments,
   };
 }
@@ -60,7 +67,7 @@ export function useData() {
   const [loading, setLoading] = useState(false);
   const [firstPageLoaded, setFirstPageLoaded] = useState(false);
 
-  const fetchNextPage = useCallback(
+  const fetchPage = useCallback(
     (nextPageNumber: number) => {
       if (nextPageNumber > pageNumber && !loading) {
         setLoading(true);
@@ -109,15 +116,26 @@ export function useData() {
     [pageNumber, pages, loading],
   );
 
+  const fetchComments = useCallback((id: string) => {
+    fetch(getSubmissionCommentsUrl(id))
+      .then((res) => res.text())
+      .then((page) => {})
+      .catch((error) => {
+        console.log(`Error fetching comments for ${id}`, error);
+      })
+      .finally(() => {});
+    //todo
+  }, []);
+
   /**
    *  Fetch initial page
    */
   useEffect(() => {
     if (!firstPageLoaded) {
-      fetchNextPage(1);
+      fetchPage(1);
       setFirstPageLoaded(true);
     }
-  }, [fetchNextPage, firstPageLoaded]);
+  }, [fetchPage, firstPageLoaded]);
 
   useEffect(() => {
     console.log("Current data", pages);

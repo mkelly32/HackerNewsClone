@@ -9,6 +9,13 @@ export type Submission = {
   site: string; //  Unsure about this property
   timestamp: string;
   score: number;
-  author: string;
+  user: string;
   comments: number;
+};
+
+export type Comment = {
+  user: string;
+  timestamp: string;
+  text: string;
+  replies: Comment[];
 };
