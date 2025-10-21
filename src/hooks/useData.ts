@@ -2,63 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 import type { Pages, Submission } from "../types/data";
 
 /**
- *  Generate page request url
+ *  Generate submission detailed view url
  */
-function pageUrl(pageNumber: number): string {
-  return `api/?p=${pageNumber}`;
-}
-
-/**
- *  Generate submission commments url
- */
-function getSubmissionCommentsUrl(id: string): string {
-  return `item/?id=${id}`;
-}
-
-type SubmissionTitleData = {
-  id: string;
-  title: string;
-  reference: string;
-  site: string;
-};
-/**
- *  Extract Submission data from the tile elmenet of a Submission
- */
-function getTitleData(element: Element): SubmissionTitleData {
-  const id = element.getAttribute("id")!;
-  const title = element.querySelector(".titleline a")?.innerHTML!;
-  const reference = element
-    .querySelector(".titleline a")
-    ?.getAttribute("href")!;
-  const site = element.querySelector(".sitestr")?.innerHTML!;
-  return {
-    id,
-    title,
-    reference,
-    site,
-  };
-}
-
-type SubmissionSubtitleData = Omit<Submission, keyof SubmissionTitleData>;
-/**
- *  Extract Submission data from the subtitle element of a Submission
- */
-function getSubtitleData(element: Element): SubmissionSubtitleData {
-  const timestamp = element
-    .querySelector(".subline .age")
-    ?.getAttribute("title")!;
-  const scoreText = element.querySelector(".subline .score")?.innerHTML;
-  const score = Number(scoreText?.split(" ")[0] ?? 0);
-  const user = element.querySelector(".subline .hnuser")?.innerHTML!;
-  const sublineLinks = element.querySelectorAll(".subline a");
-  const commentsText = sublineLinks[sublineLinks.length - 1].innerHTML;
-  const comments = Number(commentsText.split("&nbsp")[0] ?? 0);
-  return {
-    timestamp,
-    score,
-    user,
-    comments,
-  };
+function getSubmissionUrl(id: string): string {
+  return `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
 }
 
 export function useData() {
@@ -73,38 +20,7 @@ export function useData() {
         setLoading(true);
         fetch(pageUrl(nextPageNumber))
           .then((res) => res.text())
-          .then((pageAsText) => {
-            console.log("page", pageAsText);
-            const parser = new DOMParser();
-            const pageDocument = parser.parseFromString(
-              pageAsText,
-              "text/html",
-            );
-            const submissionTitles = Array.from(
-              pageDocument.querySelectorAll(".athing.submission"),
-            );
-            const submissionSubtitles = Array.from(
-              pageDocument.querySelectorAll(".subtext"),
-            );
-            const submissions: Submission[] = submissionTitles.map(
-              (submissionTitle, index) => {
-                const submissionSubtitle = submissionSubtitles[index];
-
-                return {
-                  ...getTitleData(submissionTitle),
-                  ...getSubtitleData(submissionSubtitle),
-                };
-              },
-            );
-
-            console.log("debug submissions", submissions);
-
-            setPages({
-              ...pages,
-              [pageNumber]: submissions,
-            });
-            setPageNumber(nextPageNumber);
-          })
+          .then((page) => {})
           .catch((error) => {
             console.log(`Error fetching page: ${pageNumber}`, error);
           })
@@ -117,14 +33,17 @@ export function useData() {
   );
 
   const fetchComments = useCallback((id: string) => {
-    fetch(getSubmissionCommentsUrl(id))
-      .then((res) => res.text())
-      .then((page) => {})
-      .catch((error) => {
-        console.log(`Error fetching comments for ${id}`, error);
+    console.log("fetching submission ", id);
+    fetch(getSubmissionUrl(id))
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("submission response", response);
       })
-      .finally(() => {});
-    //todo
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //  Todo
   }, []);
 
   /**
@@ -139,7 +58,12 @@ export function useData() {
 
   useEffect(() => {
     console.log("Current data", pages);
-  }, [pages]);
+    const firstSubmission = pages[1] && pages[1][1];
+    console.log("first submission", firstSubmission);
+    if (firstSubmission) {
+      fetchComments(firstSubmission.id);
+    }
+  }, [pages, fetchComments]);
 
   return {
     pages,
