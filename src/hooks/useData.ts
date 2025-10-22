@@ -14,24 +14,6 @@ export function useData() {
   const [loading, setLoading] = useState(false);
   const [firstPageLoaded, setFirstPageLoaded] = useState(false);
 
-  const fetchPage = useCallback(
-    (nextPageNumber: number) => {
-      if (nextPageNumber > pageNumber && !loading) {
-        setLoading(true);
-        fetch(pageUrl(nextPageNumber))
-          .then((res) => res.text())
-          .then((page) => {})
-          .catch((error) => {
-            console.log(`Error fetching page: ${pageNumber}`, error);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
-    },
-    [pageNumber, pages, loading],
-  );
-
   const fetchComments = useCallback((id: string) => {
     console.log("fetching submission ", id);
     fetch(getSubmissionUrl(id))

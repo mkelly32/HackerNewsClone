@@ -1,13 +1,9 @@
 import { Submission } from "../types/data";
 
-type SubmissionTitleData = {
-  id: string;
-  title: string;
-  reference: string;
-  site: string;
+type SubmissionTitleData = Pick<Submission, "id" | "title"> & { url?: string };
+type SubmissionSubtitleData = Pick<Submission, "time" | "score" | "by"> & {
+  descendants?: number;
 };
-
-type SubmissionSubtitleData = Omit<Submission, keyof SubmissionTitleData>;
 
 /**
  *  Generate page request url
@@ -24,12 +20,11 @@ function getTitleData(element: Element): SubmissionTitleData {
   const title = element.querySelector(".titleline a")?.innerHTML ?? "";
   const reference =
     element.querySelector(".titleline a")?.getAttribute("href") ?? "";
-  const site = element.querySelector(".sitestr")?.innerHTML ?? "";
+  const site = element.querySelector(".sitestr")?.innerHTML ?? ""; //todo find a reasons for it
   return {
-    id,
+    id: Number(id),
     title,
-    reference,
-    site,
+    url: reference,
   };
 }
 /**
@@ -45,11 +40,12 @@ function getSubtitleData(element: Element): SubmissionSubtitleData {
   const sublineLinks = element.querySelectorAll(".subline a");
   const commentsText = sublineLinks[sublineLinks.length - 1]?.innerHTML ?? "";
   const comments = Number(commentsText.split("&nbsp")[0] ?? 0);
+  const time = Number((timestamp?.split(" ") ?? [0, 0])[1]);
   return {
-    timestamp,
+    time,
     score,
-    user,
-    comments,
+    by: user,
+    descendants: comments,
   };
 }
 
@@ -66,9 +62,19 @@ export function parseSubmissionsFromPage(page: string): Submission[] {
     (submissionTitle, index) => {
       const submissionSubtitle = submissionSubtitles[index];
 
+      const kids: number[] = [];
+      const type = "story";
+
+      const titleData = getTitleData(submissionTitle);
+      const subtitleData = getSubtitleData(submissionSubtitle);
+
       return {
-        ...getTitleData(submissionTitle),
-        ...getSubtitleData(submissionSubtitle),
+        ...titleData,
+        url: titleData.url ?? "",
+        ...subtitleData,
+        descendants: subtitleData.descendants ?? 0,
+        type,
+        kids,
       };
     },
   );
