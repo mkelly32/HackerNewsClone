@@ -40,7 +40,7 @@ export type Poll = {
   kids: number[];
   parts: number[];
   score: number;
-  text: "";
+  text: string;
   time: number;
   title: string;
   type: "poll";
@@ -59,8 +59,11 @@ export type PollOpt = {
 export type Submission = Story | Ask | Job | Poll;
 
 export type Comment = {
-  user: string;
-  timestamp: string;
+  by: string;
+  id: number;
+  kids: number[];
+  parent: number;
   text: string;
-  replies: Comment[];
+  time: number;
+  type: "comment";
 };

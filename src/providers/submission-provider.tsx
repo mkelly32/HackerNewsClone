@@ -24,13 +24,13 @@ type SubmissionProviderValue = {
   fetchSubmissions: () => void;
 };
 
+const submissionInitialState: SubmissionState = {};
 const SubmissionContext = createContext<SubmissionProviderValue>({
-  state: {},
+  state: submissionInitialState,
   loading: false,
   fetchSubmissions: () => null,
 });
 
-const submissionInitialState: SubmissionState = {};
 function reducer(state: SubmissionState, action: SubmissionActions) {
   switch (action.type) {
     case "submission/add":
