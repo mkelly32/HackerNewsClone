@@ -6,61 +6,86 @@ import {
   createContext,
   ReactNode,
   useMemo,
+  useRef,
+  useEffect,
 } from "react";
-import { Submission } from "../types/data";
-import { SubmissionActions } from "../types/submission-actions";
+import {
+  setLoading,
+  SubmissionActions,
+} from "../store/submission/submission.actions";
 import {
   getPageUrl,
   parseSubmissionsFromPage,
 } from "../utilities/submission.utils";
-
-type SubmissionState = {
-  [id: string]: Submission;
-};
+import {
+  selectLoading,
+  selectSubmissionIds,
+  SubmissionState,
+} from "../store/submission/submission";
 
 type SubmissionProviderValue = {
-  state: SubmissionState;
-  loading: boolean;
+  submissionIds: number[];
   fetchSubmissions: () => void;
 };
 
-const submissionInitialState: SubmissionState = {};
-const SubmissionContext = createContext<SubmissionProviderValue>({
-  state: submissionInitialState,
+const submissionInitialState: SubmissionState = {
+  entities: {},
   loading: false,
+};
+const SubmissionContext = createContext<SubmissionProviderValue>({
+  submissionIds: [],
   fetchSubmissions: () => null,
 });
 
-function reducer(state: SubmissionState, action: SubmissionActions) {
+function reducer(
+  state: SubmissionState,
+  action: SubmissionActions,
+): SubmissionState {
   switch (action.type) {
     case "submission/add":
-      const addSubmissionsUpdate: SubmissionState = action.submissions.reduce(
-        (previous: SubmissionState, submission) => {
-          return {
-            ...previous,
-            [submission.id]: submission,
-          };
-        },
-        {},
-      );
+      const addSubmissionsUpdate: SubmissionState["entities"] =
+        action.submissions.reduce(
+          (previous: SubmissionState["entities"], submission) => {
+            return {
+              ...previous,
+              [submission.id]: submission,
+            };
+          },
+          {},
+        );
       return {
         ...state,
-        ...addSubmissionsUpdate,
+        entities: {
+          ...state.entities,
+          ...addSubmissionsUpdate,
+        },
       };
     case "submission/remove":
-      break;
+      return state;
+    case "loading/set":
+      return {
+        ...state,
+        loading: action.value,
+      };
+    default:
+      console.log("unhandled action in Submission reducer");
+      return state;
   }
-  return state;
 }
 
 type SubmissionProviderProps = { children: ReactNode };
 export const SubmissionProvider = ({ children }: SubmissionProviderProps) => {
   const [state, dispatch] = useReducer(reducer, submissionInitialState);
   const [pageNumber, setPageNumber] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const initialPageFetched = useRef(false);
+
+  const loading = useMemo(() => selectLoading(state), [state]);
+
+  const submissionIds = useMemo(() => selectSubmissionIds(state), [state]);
+
   const fetchSubmissions = useCallback(() => {
     if (!loading) {
-      setLoading(true);
+      dispatch(setLoading(true));
       fetch(getPageUrl(pageNumber))
         .then((res) => res.text())
         .then((page) => {
@@ -75,15 +100,21 @@ export const SubmissionProvider = ({ children }: SubmissionProviderProps) => {
           console.log(`Error fetching page: ${pageNumber}`, error);
         })
         .finally(() => {
-          setLoading(false);
+          dispatch(setLoading(false));
         });
     }
   }, [pageNumber, loading]);
 
+  useEffect(() => {
+    if (!initialPageFetched.current) {
+      fetchSubmissions();
+      initialPageFetched.current = true;
+    }
+  }, [fetchSubmissions]);
+
   const context = useMemo(
     (): SubmissionProviderValue => ({
-      state,
-      loading,
+      submissionIds,
       fetchSubmissions,
     }),
     [fetchSubmissions, loading, state],

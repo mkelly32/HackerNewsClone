@@ -1,9 +1,18 @@
 # Project Name
 ## Backlog
-## Todo
 - [ ] [Task] Start figma design
+- [ ] [Task] Style Submission List Component
+- [ ] [Feature] Add Header Component
+- [ ] [Feature] Add Comment List Component
+## Todo
 ## In Progress
+- [ ] [Task] Refine Submission Type and generation
+- [ ] [Feature] Create Submission Selectors
+- [ ] [Feature] Add Submission Component
 ## Done
+- [ ] [Feature] Add SubmissionList container
+- [ ] [Feature] Create SubmisisonList selectors
+- [ ] [Feature] Add Submission container
 - [ ] [Task] Make Comment Type
 - [ ] [Feature] Comment Provider
 - [ ] [Feature] SubmissionProvider]
