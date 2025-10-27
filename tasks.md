@@ -5,10 +5,10 @@
 - [ ] [Feature] Add Comment List Component
 ## Todo
 - [ ] [Task] Style Submisison Component]
-- [ ] [Feature] Create title component
-- [ ] [Feature] Add date component
+- [ ] [Feature] Add Submisison Meta component
 ## In Progress
 - [ ] [Task] Start figma design
+- [ ] [Feature] Create title component
 - [ ] [Task] Refine Submission Type and generation
 ## Done
 - [ ] [Feature] Add SubmissionList container

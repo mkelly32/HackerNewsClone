@@ -4,6 +4,11 @@ import { SubmissionItem } from "../submission/submission";
 import { FC } from "react";
 
 const ListOfSubmissions = styled.ul`
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
   width: 100%;
   height: 100%;
 
