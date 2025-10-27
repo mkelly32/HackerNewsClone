@@ -19,13 +19,32 @@ import {
 } from "../utilities/submission.utils";
 import {
   selectLoading,
+  selectSubmissionAuthorPure,
+  selectSubmissionDescendantsPure,
   selectSubmissionIds,
+  selectSubmissionKidsPure,
+  selectSubmissionScorePure,
+  selectSubmissionTimePure,
+  selectSubmissionTitlePure,
+  selectSubmissionTypePure,
+  selectSubmissionUrlPure,
   SubmissionState,
 } from "../store/submission/submission";
+import { StoreSelector } from "../types/utils";
 
 type SubmissionProviderValue = {
   submissionIds: number[];
   fetchSubmissions: () => void;
+  selectSubmissionType: StoreSelector<typeof selectSubmissionTypePure>;
+  selectSubmissionTitle: StoreSelector<typeof selectSubmissionTitlePure>;
+  selectSubmissionAuthor: StoreSelector<typeof selectSubmissionAuthorPure>;
+  selectSubmissionScore: StoreSelector<typeof selectSubmissionScorePure>;
+  selectSubmissionTime: StoreSelector<typeof selectSubmissionTimePure>;
+  selectSubmissionUrl: StoreSelector<typeof selectSubmissionUrlPure>;
+  selectSubmissionDescendants: StoreSelector<
+    typeof selectSubmissionDescendantsPure
+  >;
+  selectSubmissionKids: StoreSelector<typeof selectSubmissionKidsPure>;
 };
 
 const submissionInitialState: SubmissionState = {
@@ -35,6 +54,14 @@ const submissionInitialState: SubmissionState = {
 const SubmissionContext = createContext<SubmissionProviderValue>({
   submissionIds: [],
   fetchSubmissions: () => null,
+  selectSubmissionType: () => "story",
+  selectSubmissionTitle: () => "",
+  selectSubmissionAuthor: () => "",
+  selectSubmissionScore: () => 0,
+  selectSubmissionTime: () => 0,
+  selectSubmissionUrl: () => "",
+  selectSubmissionDescendants: () => 0,
+  selectSubmissionKids: () => [],
 });
 
 function reducer(
@@ -112,10 +139,52 @@ export const SubmissionProvider = ({ children }: SubmissionProviderProps) => {
     }
   }, [fetchSubmissions]);
 
+  //  Selectors
+  const selectSubmissionType = useCallback(
+    (id: number) => selectSubmissionTypePure(state, id),
+    [state],
+  );
+  const selectSubmissionTitle = useCallback(
+    (id: number) => selectSubmissionTitlePure(state, id),
+    [state],
+  );
+  const selectSubmissionUrl = useCallback(
+    (id: number) => selectSubmissionUrlPure(state, id),
+    [state],
+  );
+  const selectSubmissionAuthor = useCallback(
+    (id: number) => selectSubmissionAuthorPure(state, id),
+    [state],
+  );
+  const selectSubmissionTime = useCallback(
+    (id: number) => selectSubmissionTimePure(state, id),
+    [state],
+  );
+  const selectSubmissionScore = useCallback(
+    (id: number) => selectSubmissionScorePure(state, id),
+    [state],
+  );
+  const selectSubmissionDescendants = useCallback(
+    (id: number) => selectSubmissionDescendantsPure(state, id),
+    [state],
+  );
+  const selectSubmissionKids = useCallback(
+    (id: number) => selectSubmissionKidsPure(state, id),
+    [state],
+  );
+
   const context = useMemo(
     (): SubmissionProviderValue => ({
       submissionIds,
       fetchSubmissions,
+      selectSubmissionType,
+      selectSubmissionTitle,
+      selectSubmissionAuthor,
+      selectSubmissionScore,
+      selectSubmissionTime,
+      selectSubmissionUrl,
+      selectSubmissionDescendants,
+      selectSubmissionKids,
     }),
     [fetchSubmissions, loading, state],
   );
@@ -127,4 +196,4 @@ export const SubmissionProvider = ({ children }: SubmissionProviderProps) => {
   );
 };
 
-export const useSubmisisonContext = () => useContext(SubmissionContext);
+export const useSubmissionContext = () => useContext(SubmissionContext);

@@ -14,6 +14,7 @@ export type Ask = {
   by: string;
   descendants: number;
   id: number;
+  url: undefined;
   kids: number[];
   score: number;
   text: string;
@@ -25,18 +26,21 @@ export type Ask = {
 export type Job = {
   by: string;
   id: number;
+  descendants: undefined;
+  kids: undefined;
   score: number;
   text: string;
   time: number;
   title: string;
   type: "job";
-  url: "";
+  url: string;
 };
 
 export type Poll = {
   by: string;
   descendants: number;
   id: number;
+  url: undefined;
   kids: number[];
   parts: number[];
   score: number;
@@ -56,7 +60,21 @@ export type PollOpt = {
   type: "pollopt";
 };
 
-export type Submission = Story | Ask | Job | Poll;
+export type Submission = {
+  id: number;
+  by: string;
+  title: string;
+  time: number;
+  score: number;
+  type: SubmissionType;
+  url?: string;
+  text?: string;
+  descendants?: number;
+  kids?: number[];
+  parts?: number[];
+};
+
+export type SubmissionType = "story" | "job" | "poll";
 
 export type Comment = {
   by: string;
