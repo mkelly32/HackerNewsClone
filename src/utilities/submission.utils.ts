@@ -1,83 +1,16 @@
 import { Submission } from "../types/data";
-
-type SubmissionTitleData = Pick<Submission, "id" | "title"> & { url?: string };
-type SubmissionSubtitleData = Pick<Submission, "time" | "score" | "by"> & {
-  descendants?: number;
-};
+const BASE = "https://hacker-news.firebaseio.com/v0";
 
 /**
  *  Generate page request url
  */
-export function getPageUrl(pageNumber: number): string {
-  return `api/?p=${pageNumber}`;
+export function getTopStories(): string {
+  return `${BASE}/topstories.json`;
 }
 
 /**
- *  Extract Submission data from the tile elmenet of a Submission
+ *  Retrieve a Story | Ask | JOB | Poll | PollOpt | Comment
  */
-function getTitleData(element: Element): SubmissionTitleData {
-  const id = element.getAttribute("id")!;
-  const title = element.querySelector(".titleline a")?.innerHTML ?? "";
-  const reference =
-    element.querySelector(".titleline a")?.getAttribute("href") ?? "";
-  const site = element.querySelector(".sitestr")?.innerHTML ?? ""; //todo find a reasons for it
-  return {
-    id: Number(id),
-    title,
-    url: reference,
-  };
-}
-/**
- *  Extract Submission data from the subtitle element of a Submission
- */
-function getSubtitleData(element: Element): SubmissionSubtitleData {
-  const timestamp = element
-    .querySelector(".subline .age")
-    ?.getAttribute("title")!;
-  const scoreText = element.querySelector(".subline .score")?.innerHTML;
-  const score = Number(scoreText?.split(" ")[0] ?? 0);
-  const user = element.querySelector(".subline .hnuser")?.innerHTML!;
-  const sublineLinks = element.querySelectorAll(".subline a");
-  const commentsText = sublineLinks[sublineLinks.length - 1]?.innerHTML ?? "";
-  const comments = Number(commentsText.split("&nbsp")[0] ?? 0);
-  const time = Number((timestamp?.split(" ") ?? [0, 0])[1]);
-  return {
-    time,
-    score,
-    by: user,
-    descendants: comments,
-  };
-}
-
-export function parseSubmissionsFromPage(page: string): Submission[] {
-  const parser = new DOMParser();
-  const pageDocument = parser.parseFromString(page, "text/html");
-  const submissionTitles = Array.from(
-    pageDocument.querySelectorAll(".athing.submission"),
-  );
-  const submissionSubtitles = Array.from(
-    pageDocument.querySelectorAll(".subtext"),
-  );
-  const submissions: Submission[] = submissionTitles.map(
-    (submissionTitle, index) => {
-      const submissionSubtitle = submissionSubtitles[index];
-
-      const kids: number[] = [];
-      const type = "story";
-
-      const titleData = getTitleData(submissionTitle);
-      const subtitleData = getSubtitleData(submissionSubtitle);
-
-      return {
-        ...titleData,
-        url: titleData.url ?? "",
-        ...subtitleData,
-        descendants: subtitleData.descendants ?? 0,
-        type,
-        kids,
-      };
-    },
-  );
-
-  return submissions;
+export function getHackerNewsItem(id: number): string {
+  return `${BASE}/item/${id}`;
 }

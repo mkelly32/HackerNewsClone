@@ -9,7 +9,7 @@
 ## In Progress
 - [ ] [Task] Start figma design
 - [ ] [Feature] Create title component
-- [ ] [Task] Refine Submission Type and generation
+- [ ] [Task] Transition Submisison Logic to Component
 ## Done
 - [ ] [Feature] Add SubmissionList container
 - [ ] [Feature] Create SubmisisonList selectors

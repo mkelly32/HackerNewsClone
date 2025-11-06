@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useSubmissionContext } from "../../providers/submission-provider";
 import { SubmissionItem } from "../submission/submission";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { Maybe } from "../../types/utils";
+import { Submission } from "../../types/data";
 
 const ListOfSubmissions = styled.ul`
   display: flex;
@@ -19,43 +21,12 @@ const ListOfSubmissions = styled.ul`
  *  Renders a list of Hacker News submisisons (Story, Ask, Poll, Job)
  */
 export const SubmissionList: FC = () => {
-  const {
-    submissionIds,
-    selectSubmissionType,
-    selectSubmissionTitle,
-    selectSubmissionAuthor,
-    selectSubmissionScore,
-    selectSubmissionTime,
-    selectSubmissionUrl,
-    selectSubmissionDescendants,
-    selectSubmissionKids,
-  } = useSubmissionContext();
+  const { topStories } = useSubmissionContext();
+
   return (
     <ListOfSubmissions>
-      {submissionIds.map((id) => {
-        const type = selectSubmissionType(id);
-        const title = selectSubmissionTitle(id);
-        const by = selectSubmissionAuthor(id);
-        const score = selectSubmissionScore(id);
-        const time = selectSubmissionTime(id);
-        const url = selectSubmissionUrl(id);
-        const descendants = selectSubmissionDescendants(id);
-        const kids = selectSubmissionKids(id);
-
-        return (
-          <SubmissionItem
-            id={id}
-            type={type!}
-            key={id}
-            title={title}
-            by={by}
-            score={score}
-            time={time}
-            url={url}
-            descendants={descendants}
-            kids={kids}
-          />
-        );
+      {topStories.map((id) => {
+        return <SubmissionItem id={id} key={id} />;
       })}
     </ListOfSubmissions>
   );
