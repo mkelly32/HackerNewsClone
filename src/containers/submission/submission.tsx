@@ -1,13 +1,14 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Submission } from "../../types/data";
+import { HNItem } from "../../types/data";
 import { SubmissionTitle } from "../../components/submission-title/submission-title";
-import { isTruthy, Maybe } from "../../types/utils";
+import { isTruthy, Maybe, Nullable } from "../../types/utils";
 import { getHackerNewsItem } from "../../utilities/submission.utils";
 import { IfElse } from "../../utilities/jsx-utils";
 
 const SubmisisonElement = styled.button`
   width: 100%;
+  min-height: 8rem;
   height: 8rem;
   margin: 0;
   padding: 20px;
@@ -16,27 +17,61 @@ const SubmisisonElement = styled.button`
   border: 1px solid var(--secondary-dark);
 `;
 
-type Props = { id: number };
-export const SubmissionItem: FC<Props> = ({ id }) => {
-  const [submission, setSubmission] = useState<Maybe<Submission>>(undefined);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Maybe<string>>(undefined);
+type Props = { id: number; container: RefObject<Nullable<HTMLUListElement>> };
+export const SubmissionItem: FC<Props> = ({ id, container }) => {
+  const submissionElement = useRef<HTMLButtonElement>(null);
+  const observer = useRef<IntersectionObserver>(null);
+  const [submission, setSubmission] = useState<Nullable<HNItem>>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Nullable<string>>(null);
 
   const title = submission?.title ?? "";
   const url = submission?.url ?? "";
 
   //  Fetch Submisison
-  useCallback(() => {
-    setLoading(true);
-    fetch(getHackerNewsItem(id))
-      .then((response) => response.json())
-      .then((hnSubmission) => setSubmission(hnSubmission))
-      .catch((error) => setError(String(error)))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const fetchSubmission = useCallback(() => {
+    if (!loading && !submission && !error) {
+      setLoading(true);
+      fetch(getHackerNewsItem(id))
+        .then((response) => response.json())
+        .then((hnSubmission) => setSubmission(hnSubmission))
+        .catch((error) => setError(String(error)))
+        .finally(() => setLoading(false));
+    }
+  }, [id, loading, submission]);
+
+  //  IntersectionObserver callback
+  const fetchIfVisible = useCallback((callback: () => void) => {
+    const ifIntersecting = (entries: IntersectionObserverEntry[]) => {
+      if (entries[0]?.isIntersecting) {
+        callback();
+      }
+    };
+    return ifIntersecting;
+  }, []);
+
+  //  Init IntersectionObserver to only fetch the submission when the element is visible inside its parent
+  useEffect(() => {
+    let element: HTMLButtonElement; // Need to close over element for IntersectionObserver cleanup
+    if (submissionElement.current !== null && container.current !== null) {
+      element = submissionElement.current;
+      observer.current = new IntersectionObserver(
+        fetchIfVisible(fetchSubmission),
+        {
+          root: container.current,
+          threshold: 1,
+        },
+      );
+      observer.current.observe(element);
+    }
+
+    return () => {
+      observer.current?.unobserve(element);
+    };
+  }, [fetchSubmission, fetchIfVisible]);
 
   return (
-    <SubmisisonElement>
+    <SubmisisonElement ref={submissionElement}>
       <IfElse
         condition={loading}
         then={<div>Loading...</div>}

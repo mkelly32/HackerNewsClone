@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useSubmissionContext } from "../../providers/submission-provider";
 import { SubmissionItem } from "../submission/submission";
-import { FC, useEffect, useState } from "react";
-import { Maybe } from "../../types/utils";
-import { Submission } from "../../types/data";
+import { FC, useEffect, useRef, useState } from "react";
+import { Maybe, Nullable } from "../../types/utils";
+import { HNItem } from "../../types/data";
 
 const ListOfSubmissions = styled.ul`
   display: flex;
@@ -12,21 +12,24 @@ const ListOfSubmissions = styled.ul`
   gap: 12px;
 
   width: 100%;
-  height: 100%;
+  height: 60vh;
 
   margin: 0;
   padding: 0;
+
+  overflow: auto;
 `;
 /**
  *  Renders a list of Hacker News submisisons (Story, Ask, Poll, Job)
  */
 export const SubmissionList: FC = () => {
+  const list = useRef<Nullable<HTMLUListElement>>(null);
   const { topStories } = useSubmissionContext();
 
   return (
-    <ListOfSubmissions>
-      {topStories.map((id) => {
-        return <SubmissionItem id={id} key={id} />;
+    <ListOfSubmissions ref={list}>
+      {topStories.slice(0, 20).map((id) => {
+        return <SubmissionItem id={id} key={id} container={list} />;
       })}
     </ListOfSubmissions>
   );

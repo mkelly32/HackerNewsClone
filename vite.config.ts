@@ -7,8 +7,9 @@ export default defineConfig({
     port: 4120,
     proxy: {
       "/api": {
-        target: "https://news.ycombinator.com",
+        target: "https://hacker-news.firebaseio.com/v0",
         changeOrigin: true,
+        secure: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
