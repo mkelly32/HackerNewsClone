@@ -4,6 +4,7 @@
 - [ ] [Feature]: Add IFrame view for Submisison url
 - [ ] [Feature] Add Comment List Component
 - [ ] [Feature] Add controls for iframe/comments]
+- [ ] [Feature] Add toolbar to elements with hidden overflow
 ## Todo
 - [ ] Task: Style Submisssion Score
 - [ ] Task: Style Submission Author

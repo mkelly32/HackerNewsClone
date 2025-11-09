@@ -91,7 +91,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
   return (
     <SubmissionElement ref={submissionElement}>
       <IfElse
-        condition={loading}
+        condition={!item}
         then={<UnloadedSubmission>Loading...</UnloadedSubmission>}
         else={
           <LoadedSubmission>
