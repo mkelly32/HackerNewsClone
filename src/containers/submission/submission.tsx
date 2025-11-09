@@ -14,7 +14,8 @@ const SubmissionElement = styled.li`
   margin: 0;
   padding: 20px;
 
-  background-color: var(--secondary-light);
+  background-color: var(--primary-light);
+  border-radius: 5px;
   border: 1px solid var(--secondary-dark);
 `;
 

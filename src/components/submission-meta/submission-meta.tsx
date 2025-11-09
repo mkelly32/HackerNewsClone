@@ -11,14 +11,16 @@ const Meta = styled.div`
   font-size: 1.2rem;
 `;
 
-const Author = styled.span``;
+const Author = styled.span`
+  color: var(--black);
+`;
 const ScoreDecoration = styled.span`
   display: flex;
   align-items: center;
   height: 2rem;
   width: 2rem;
   margin-left: auto;
-  background-color: #0094c6;
+  background-color: var(--secondary-dark);
   border-radius: 50%;
 
   &.bigScore {
