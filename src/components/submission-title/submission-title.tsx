@@ -27,6 +27,7 @@ const Descendents = styled.span`
   margin-left: auto;
   padding-left: 10px;
   font-size: 1.2rem;
+  white-space: nowrap;
 `;
 
 type Props = {
@@ -44,7 +45,7 @@ export const SubmissionTitle: FC<Props> = ({ title, url, descendants }) => {
       <Title href={url} target="_blank">
         {title}
       </Title>
-      <Descendents>{descendants}</Descendents>
+      <Descendents>{descendants} comments</Descendents>
     </SubmissionHeader>
   );
 };
