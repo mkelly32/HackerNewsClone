@@ -1,18 +1,23 @@
 # Project Name
 ## Backlog
 - [ ] [Task] Style Submission List Component
-- [ ] [Feature] Add Header Component
+- [ ] [Feature]: Add IFrame view for Submisison url
 - [ ] [Feature] Add Comment List Component
+- [ ] [Feature] Add controls for iframe/comments]
 ## Todo
-- [ ] [Task] Style Submisison Component]
-- [ ] [Feature] Add Submisison Meta component
+- [ ] Task: Style Submisssion Score
+- [ ] Task: Style Submission Author
+- [ ] Task: Style Submission Descendants
 ## In Progress
 - [ ] [Task] Start figma design
-- [ ] [Feature] Create title component
-- [ ] [Task] Transition Submisison Logic to Component
 ## Done
+- [ ] [Feature] Add Header Component
+- [ ] [Feature] Add Submisison Meta component
+- [ ] [Task] Style Submisison Component]
 - [ ] [Feature] Add SubmissionList container
+- [ ] [Feature] Create title component
 - [ ] [Feature] Create SubmisisonList selectors
+- [ ] [Task] Transition Submisison Logic to Component
 - [ ] [Feature] Add Submission Component
 - [ ] [Feature] Create Submission Selectors
 - [ ] [Feature] Add Submission container
