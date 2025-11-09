@@ -11,7 +11,7 @@ const ListOfSubmissions = styled.ul`
 
   gap: 12px;
 
-  width: 100%;
+  width: 80vw;
   height: 60vh;
 
   margin: 0;
