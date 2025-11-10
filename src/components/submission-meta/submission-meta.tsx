@@ -35,9 +35,10 @@ const Score = styled.span`
 type Props = {
   score: number;
   author: string;
+  time: number;
 };
 
-export const SubmissionMeta: FC<Props> = ({ score, author }) => {
+export const SubmissionMeta: FC<Props> = ({ score, author, time }) => {
   const largeScore = score / 1000 >= 1;
   const scoreAdditionalStyles = largeScore ? "bigScore" : "";
   return (

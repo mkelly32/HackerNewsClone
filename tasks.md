@@ -11,6 +11,7 @@
 - [ ] Task: Style Submission Descendants
 ## In Progress
 - [ ] [Task] Start figma design
+- [ ] [Feature] Add time info to SubmissionMeta
 ## Done
 - [ ] [Feature] Add Header Component
 - [ ] [Feature] Add Submisison Meta component

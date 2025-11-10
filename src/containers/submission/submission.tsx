@@ -8,6 +8,7 @@ import { IfElse } from "../../utilities/jsx-utils";
 import { SubmissionMeta } from "../../components/submission-meta/submission-meta";
 
 const SubmissionElement = styled.li`
+  position: relative;
   width: 100%;
   min-height: 8rem;
   height: 8rem;
@@ -29,7 +30,12 @@ const LoadedSubmission = styled.div`
   text-align: left;
 `;
 
-const UnloadedSubmission = styled.div``;
+const UnloadedSubmission = styled.div`
+  font-size: 2.5rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 type Props = { id: number; container: RefObject<Nullable<HTMLUListElement>> };
 export const SubmissionItem: FC<Props> = ({ id, container }) => {
@@ -44,6 +50,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
   const score = item?.score ?? 0;
   const author = item?.by ?? "";
   const descendants = item?.descendants ?? 0;
+  const time = item?.time ?? 0;
 
   //  Fetch Submisison
   const fetchSubmission = useCallback(() => {
@@ -101,7 +108,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
               url={url}
               descendants={descendants}
             />
-            <SubmissionMeta score={score} author={author} />
+            <SubmissionMeta score={score} author={author} time={time} />
           </LoadedSubmission>
         }
       />
