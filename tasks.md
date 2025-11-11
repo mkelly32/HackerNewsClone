@@ -2,7 +2,6 @@
 ## Backlog
 - [ ] [Task] Style Submission List Component
 - [ ] [Feature]: Add IFrame view for Submisison url
-- [ ] [Feature] Add Comment List Component
 - [ ] [Feature] Add controls for iframe/comments]
 - [ ] [Feature] Add toolbar to elements with hidden overflow
 ## Todo
@@ -11,9 +10,11 @@
 - [ ] Task: Style Submission Descendants
 ## In Progress
 - [ ] [Task] Start figma design
-- [ ] [Feature] Add time info to SubmissionMeta
+- [ ] [Feature] Add Expanded- Submssion Component
 ## Done
 - [ ] [Feature] Add Header Component
+- [ ] [Feature] Add time info to SubmissionMeta
+- [ ] [Feature] Add Submisison Domain component
 - [ ] [Feature] Add Submisison Meta component
 - [ ] [Task] Style Submisison Component]
 - [ ] [Feature] Add SubmissionList container

@@ -19,8 +19,8 @@ const Author = styled.span`
 const ScoreDecoration = styled.span`
   display: flex;
   align-items: center;
-  height: 2rem;
-  width: 2rem;
+  height: 2.2rem;
+  width: 2.2rem;
   margin-left: auto;
   background-color: var(--secondary-dark);
   border-radius: 50%;
