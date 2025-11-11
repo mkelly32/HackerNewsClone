@@ -71,7 +71,9 @@ export const SubmissionTime: FC<{ submissionTime: number }> = ({
         submissionAge = `${ageInDays} day${dayModifier} ago`;
         break;
       default:
-        const localizedDate = new Date(submissionTime).toLocaleDateString();
+        const localizedDate = new Date(
+          submissionTime * UNIX_TIME_FACTOR_OFFSET,
+        ).toLocaleDateString();
         submissionAge = localizedDate;
         break;
     }
