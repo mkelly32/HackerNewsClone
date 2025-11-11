@@ -16,6 +16,12 @@ const Meta = styled.div`
   font-size: 1.2rem;
 `;
 
+const Hostname = styled.div`
+  height: 1.2rem;
+  font-size: 1rem;
+  font-color: var(--secondary-light);
+`;
+
 const Author = styled.span`
   color: var(--black);
 `;
@@ -39,6 +45,17 @@ const Score = styled.span`
 const Time = styled.span`
   padding-left: 10px;
 `;
+
+export const Domain: FC<{ url: string }> = ({ url }) => {
+  let domain = "";
+  try {
+    const hostName = new URL(url).hostname;
+    domain = hostName;
+  } catch (error) {
+    domain = "";
+  }
+  return <Hostname>{domain}</Hostname>;
+};
 
 export const SubmissionTime: FC<{ submissionTime: number }> = ({
   submissionTime,
@@ -89,23 +106,28 @@ type Props = {
   score: number;
   author: string;
   submissionTime: number;
+  url: string;
 };
 
 export const SubmissionMeta: FC<Props> = ({
   score,
   author,
   submissionTime,
+  url,
 }) => {
   const largeScore = score / 1000 >= 1;
   const scoreAdditionalStyles = largeScore ? "bigScore" : "";
 
   return (
-    <Meta>
-      <Author>by: {author}</Author>
-      <SubmissionTime submissionTime={submissionTime} />
-      <ScoreDecoration className={scoreAdditionalStyles}>
-        <Score>{score}</Score>
-      </ScoreDecoration>
-    </Meta>
+    <>
+      <Domain url={url} />
+      <Meta>
+        <Author>by: {author}</Author>
+        <SubmissionTime submissionTime={submissionTime} />
+        <ScoreDecoration className={scoreAdditionalStyles}>
+          <Score>{score}</Score>
+        </ScoreDecoration>
+      </Meta>
+    </>
   );
 };

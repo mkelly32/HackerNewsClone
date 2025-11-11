@@ -112,6 +112,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
               score={score}
               author={author}
               submissionTime={time}
+              url={url}
             />
           </LoadedSubmission>
         }
