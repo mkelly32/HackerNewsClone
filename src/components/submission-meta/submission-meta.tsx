@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { styled } from "styled-components";
-
-const SECONDS_IN_MINUTE = 60;
-const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60;
-const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
-const UNIX_TIME_FACTOR_OFFSET = 1000;
+import { Domain } from "./domain";
+import { SubmissionTime } from "./time";
 
 const Meta = styled.div`
   display: flex;
@@ -14,12 +11,6 @@ const Meta = styled.div`
   padding: 0;
 
   font-size: 1.2rem;
-`;
-
-const Hostname = styled.div`
-  height: 1.2rem;
-  font-size: 1rem;
-  font-color: var(--secondary-light);
 `;
 
 const Author = styled.span`
@@ -42,65 +33,6 @@ const Score = styled.span`
   margin: auto;
   color: var(--white);
 `;
-const Time = styled.span`
-  padding-left: 10px;
-`;
-
-export const Domain: FC<{ url: string }> = ({ url }) => {
-  let domain = "";
-  try {
-    const hostName = new URL(url).hostname;
-    domain = hostName;
-  } catch (error) {
-    domain = "";
-  }
-  return <Hostname>{domain}</Hostname>;
-};
-
-export const SubmissionTime: FC<{ submissionTime: number }> = ({
-  submissionTime,
-}) => {
-  let submissionAge = "";
-  try {
-    const currentTime = Math.floor(
-      new Date().getTime() / UNIX_TIME_FACTOR_OFFSET,
-    ); // Convert 'now' to UNIX time
-    const submissionAgeInSeconds = currentTime - submissionTime;
-    switch (true) {
-      case submissionAgeInSeconds < SECONDS_IN_DAY:
-        const submissionAgeInHours = Math.floor(
-          submissionAgeInSeconds / SECONDS_IN_HOUR,
-        );
-        if (submissionAgeInHours < 2) {
-          const ageInMinutes = Math.floor(
-            submissionAgeInSeconds / SECONDS_IN_MINUTE,
-          );
-          const minuteModifier = ageInMinutes > 1 ? "s" : "";
-          submissionAge = `${ageInMinutes} minute${minuteModifier} ago`;
-        } else {
-          const hourModifier = submissionAgeInHours > 1 ? "s" : "";
-          submissionAge = `${submissionAgeInHours} hour${hourModifier} ago`;
-        }
-        break;
-      case submissionAgeInSeconds < 7 * SECONDS_IN_DAY:
-        const ageInDays = Math.floor(submissionAgeInSeconds / SECONDS_IN_DAY);
-        const dayModifier = ageInDays > 1 ? "s" : "";
-        submissionAge = `${ageInDays} day${dayModifier} ago`;
-        break;
-      default:
-        const localizedDate = new Date(
-          submissionTime * UNIX_TIME_FACTOR_OFFSET,
-        ).toLocaleDateString();
-        submissionAge = localizedDate;
-        break;
-    }
-  } catch (error) {
-    console.log(error);
-    submissionAge = "Submission time unknown";
-  }
-
-  return <Time>{submissionAge}</Time>;
-};
 
 type Props = {
   score: number;
