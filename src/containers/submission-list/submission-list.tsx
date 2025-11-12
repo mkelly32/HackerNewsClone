@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SubmissionItem } from "../submission/submission";
+import { SubmissionItem } from "../submission";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Nullable } from "../../types/utils";
 import { getTopStories } from "../../utilities/submission.utils";
@@ -11,7 +11,7 @@ const ListOfSubmissions = styled.ul`
   gap: 12px;
 
   width: 80vw;
-  height: 60vh;
+  height: 100%;
 
   margin: 0;
   padding: 0;

@@ -1,19 +1,21 @@
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { HNItem } from "../../types/data";
-import { SubmissionTitle } from "../../components/submission-title/submission-title";
 import { isTruthy, Maybe, Nullable } from "../../types/utils";
 import { getHackerNewsItem } from "../../utilities/submission.utils";
 import { IfElse } from "../../utilities/jsx-utils";
-import { SubmissionMeta } from "../../components/submission-meta/submission-meta";
+import { SubmissionTitle } from "../../components/submission-title";
+import { SubmissionMeta } from "../../components/submission-meta";
+import { useFocusedSubmissionContext } from "../../providers/focused-submission";
 
 const SubmissionElement = styled.li`
   position: relative;
   width: 100%;
+
   min-height: 8rem;
   height: 8rem;
+
   margin: 0;
-  padding: 20px;
 
   background-color: var(--primary-light);
   border-radius: 5px;
@@ -22,12 +24,25 @@ const SubmissionElement = styled.li`
 
 const LoadedSubmission = styled.div`
   display: flex;
+  height: 100%;
+`;
+
+const Submission = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  height: 100%;
+  min-width: 0;
+  width: 100%;
+
+  padding: 20px;
 
   text-align: left;
+`;
+const SubmissionActions = styled.div`
+  button {
+    height: 100%;
+  }
 `;
 
 const UnloadedSubmission = styled.div`
@@ -39,6 +54,7 @@ const UnloadedSubmission = styled.div`
 
 type Props = { id: number; container: RefObject<Nullable<HTMLUListElement>> };
 export const SubmissionItem: FC<Props> = ({ id, container }) => {
+  const { setFocused } = useFocusedSubmissionContext();
   const submissionElement = useRef<HTMLLIElement>(null);
   const observer = useRef<IntersectionObserver>(null);
   const [item, setItem] = useState<Nullable<HNItem>>(null);
@@ -51,6 +67,18 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
   const author = item?.by ?? "";
   const descendants = item?.descendants ?? 0;
   const time = item?.time ?? 0;
+
+  const focusSubmission = useCallback(() => {
+    if (item) {
+      console.log("Setting item as focused");
+      setFocused(item);
+    } else {
+      console.log(
+        "Submission Component: Tried to focus non existing submission!",
+        id,
+      );
+    }
+  }, [item]);
 
   //  Fetch Submisison
   const fetchSubmission = useCallback(() => {
@@ -94,8 +122,6 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
     };
   }, [fetchSubmission, fetchIfVisible, container]);
 
-  item && console.log(id, item);
-
   return (
     <SubmissionElement ref={submissionElement}>
       <IfElse
@@ -103,17 +129,22 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
         then={<UnloadedSubmission>Loading...</UnloadedSubmission>}
         else={
           <LoadedSubmission>
-            <SubmissionTitle
-              title={title}
-              url={url}
-              descendants={descendants}
-            />
-            <SubmissionMeta
-              score={score}
-              author={author}
-              submissionTime={time}
-              url={url}
-            />
+            <Submission>
+              <SubmissionTitle
+                title={title}
+                url={url}
+                descendants={descendants}
+              />
+              <SubmissionMeta
+                score={score}
+                author={author}
+                submissionTime={time}
+                url={url}
+              />
+            </Submission>
+            <SubmissionActions>
+              <button onClick={focusSubmission}>View</button>
+            </SubmissionActions>
           </LoadedSubmission>
         }
       />
