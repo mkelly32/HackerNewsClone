@@ -7,14 +7,14 @@
 - [ ] [Task] Style ExpandedSubmission
 ## Todo
 - [ ] [Task] Style Submisssion Score
-- [ ] [Feature] Add Comment component
 - [ ] [Task] Style Submission Author
 - [ ] [Task] Style Submission Descendants
 - [ ] [Feature] Add Tree View
-- [ ] [Bugfix] Rerender Comments when they are loaded
 - [ ] [Task] Style Comment Component
 ## In Progress
 - [ ] [Task] Start figma design
+- [ ] [Feature] Add Comment component
+- [ ] [Bugfix] Rerender Comments when they are loaded
 ## Done
 - [ ] [Feature] Add Header Component
 - [ ] [Feature] Add controls to focus a comment in Detailed View

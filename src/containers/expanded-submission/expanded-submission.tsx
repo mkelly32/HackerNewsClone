@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect, useCallback, useMemo } from "react";
+import { FC, useRef, useEffect, useCallback, useMemo, useState } from "react";
 import { styled } from "styled-components";
 import { HNItem } from "../../types/data";
 import { getHackerNewsItem } from "../../utilities/submission.utils";
@@ -13,13 +13,21 @@ type CommentCache = {
 const DetailedView = styled.div`
   width: 20vw;
   height: 100vh;
+
+  padding: 10px;
+
+  background-color: var(--secondary-light);
+`;
+
+const CommentList = styled.div`
   overflow: auto;
+  height: 100%;
 `;
 
 export const ExpandedSubmission: FC<Props> = () => {
   const { focused: submission } = useFocusedSubmissionContext();
   const loading = useRef<number[]>([]);
-  const commentCache = useRef<CommentCache>({});
+  const [commentCache, setCommentCache] = useState<CommentCache>({});
   const comments = useMemo(() => submission?.kids ?? [], [submission]);
 
   console.log("EXPANDED SUBMISSION", submission);
@@ -29,8 +37,11 @@ export const ExpandedSubmission: FC<Props> = () => {
       loading.current.push(id);
       fetch(getHackerNewsItem(id))
         .then((res) => res.json())
-        .then((comment: HNItem) => {
-          commentCache.current[comment.id] = comment;
+        .then((comment) => {
+          setCommentCache((commentCache) => ({
+            ...commentCache,
+            [comment.id]: comment,
+          }));
         })
         .catch((error) => {
           console.log("Error fetching comment", error);
@@ -47,17 +58,18 @@ export const ExpandedSubmission: FC<Props> = () => {
   useEffect(() => {
     const kids = submission?.kids ?? [];
     const commentsToFetch = kids.filter((id) => {
-      return !(id in commentCache.current) && !loading.current.includes(id);
+      return !(id in commentCache) && !loading.current.includes(id);
     });
     commentsToFetch.forEach(fetchComment);
-  }, [submission]);
+  }, [submission, commentCache]);
 
   return (
     <DetailedView>
-      content
-      {comments.map((id) => (
-        <Comment key={id} comment={commentCache.current[id]} />
-      ))}
+      <CommentList>
+        {comments.map((id) => (
+          <Comment key={id} comment={commentCache[id]} />
+        ))}
+      </CommentList>
     </DetailedView>
   );
 };
