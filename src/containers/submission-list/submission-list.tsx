@@ -8,15 +8,22 @@ const ListOfSubmissions = styled.ul`
   display: flex;
   flex-direction: column;
 
-  gap: 12px;
+  gap: 6px;
 
-  width: 80vw;
   height: 100%;
 
   margin: 0;
   padding: 0;
+  border: 1px solid var(--black);
 
   overflow: auto;
+`;
+
+const SubmissionView = styled.div`
+  width: 80vw;
+  padding: 20px 5px 20px 10px;
+
+  background-color: var(--secondary-light);
 `;
 /**
  *  Renders a list of Hacker News submisisons (Story, Ask, Poll, Job)
@@ -52,10 +59,12 @@ export const SubmissionList: FC = () => {
   }, [fetchSubmissions]);
 
   return (
-    <ListOfSubmissions ref={list}>
-      {topStories.slice(0, 20).map((id) => {
-        return <SubmissionItem id={id} key={id} container={list} />;
-      })}
-    </ListOfSubmissions>
+    <SubmissionView>
+      <ListOfSubmissions ref={list}>
+        {topStories.slice(0, 20).map((id) => {
+          return <SubmissionItem id={id} key={id} container={list} />;
+        })}
+      </ListOfSubmissions>
+    </SubmissionView>
   );
 };

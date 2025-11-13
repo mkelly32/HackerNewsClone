@@ -7,7 +7,7 @@ import { IfElse } from "../../utilities/jsx-utils";
 const CommentElement = styled.div`
   background-color: var(--primary-light);
 
-  margin-top: 10px;
+  margin: 10px 5px;
   padding: 5px;
   border: 1px solid var(--black);
   border-radius: 4px;

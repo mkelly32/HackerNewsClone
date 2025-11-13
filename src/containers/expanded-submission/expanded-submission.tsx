@@ -14,7 +14,7 @@ const DetailedView = styled.div`
   width: 20vw;
   height: 100vh;
 
-  padding: 10px;
+  padding: 20px 10px 20px 5px;
 
   background-color: var(--secondary-light);
 `;
@@ -22,6 +22,8 @@ const DetailedView = styled.div`
 const CommentList = styled.div`
   overflow: auto;
   height: 100%;
+
+  border: 1px solid var(--black);
 `;
 
 export const ExpandedSubmission: FC<Props> = () => {
@@ -66,9 +68,9 @@ export const ExpandedSubmission: FC<Props> = () => {
   return (
     <DetailedView>
       <CommentList>
-        {comments.map((id) => (
-          <Comment key={id} comment={commentCache[id]} />
-        ))}
+        {comments.map((id, index) => {
+          return <Comment key={id} comment={commentCache[id]} />;
+        })}
       </CommentList>
     </DetailedView>
   );
