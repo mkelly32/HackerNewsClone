@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { HNItem } from "../../types/data";
-import { Nullable } from "../../types/utils";
+import { isTruthy, Nullable } from "../../types/utils";
 import styled from "styled-components";
 import { IfElse } from "../../utilities/jsx-utils";
 
@@ -24,7 +24,7 @@ export const Comment: FC<Props> = ({ comment }) => {
   return (
     <CommentElement>
       <IfElse
-        condition={comment === null}
+        condition={!isTruthy(comment)}
         then={"Loading"}
         else={comment?.text}
       />
