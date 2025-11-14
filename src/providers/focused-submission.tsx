@@ -25,7 +25,6 @@ type Props = { children: ReactNode };
  */
 export const FocusedSubmissionProvider: FC<Props> = ({ children }) => {
   const [submission, setSubmission] = useState<Nullable<HNItem>>(null);
-  console.log("PROVIDER", submission);
   const context = useMemo(
     () => ({
       focused: submission,

@@ -15,18 +15,35 @@ const CommentElement = styled.div`
   overflow-wrap: anywhere;
 `;
 
-type Props = { comment: Nullable<HNItem> };
-export const Comment: FC<Props> = ({ comment }) => {
-  if (comment !== null) {
-    console.log("COMMENT", comment);
-  }
+const Header = styled.div`
+  font-size: 1.5rem;
+  text-align: end;
 
+  background-color: var(--secondary-light);
+`;
+const Body = styled.button`
+  backgound: none;
+
+  padding: 0;
+  margin: 0;
+
+  font-size: 1rem;
+`;
+
+type Props = { comment: Nullable<HNItem>; action: (comment: HNItem) => void };
+export const Comment: FC<Props> = ({ comment, action }) => {
+  const author = comment?.by ?? "";
+  const text = comment?.text ?? "";
+  const clickHandler = isTruthy(comment) ? () => action(comment) : () => null;
   return (
     <CommentElement>
       <IfElse
         condition={!isTruthy(comment)}
         then={"Loading"}
-        else={comment?.text}
+        else=<>
+          <Header>{author}</Header>
+          <Body onClick={clickHandler}>{text}</Body>
+        </>
       />
     </CommentElement>
   );

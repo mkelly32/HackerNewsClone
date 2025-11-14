@@ -20,7 +20,7 @@ const ListOfSubmissions = styled.ul`
 `;
 
 const SubmissionView = styled.div`
-  width: 80vw;
+  width: 70vw;
   padding: 20px 5px 20px 10px;
 
   background-color: var(--secondary-light);
