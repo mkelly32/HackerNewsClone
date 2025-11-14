@@ -10,15 +10,17 @@
 - [ ] [Task] Style Submission Author
 - [ ] [Task] Style Submission Descendants
 - [ ] [Task] Style Comment Component
+- [ ] [Task] Style Focused Submission
 ## In Progress
 - [ ] [Task] Start figma design
-- [ ] [Feature] Add Comment component
-- [ ] [Feature] Add Tree View of selected comments to ExpandedSubmission
-- [ ] [Feature] Add focused submission to ExpandedSubmission
 - [ ] [Feature] Decode HNItem text
+- [ ] [Task] Style CommentPath
 ## Done
 - [ ] [Feature] Add Header Component
+- [ ] [Feature] Add Comment component
 - [ ] [Feature] Add controls to focus a comment in Detailed View
+- [ ] [Feature] Add focused submission to ExpandedSubmission
+- [ ] [Feature] Add Tree View of selected comments to ExpandedSubmission
 - [ ] [Bugfix] Rerender Comments when they are loaded
 - [ ] [Feature] Add Expanded- Submssion Component
 - [ ] [Feature] Add time info to SubmissionMeta
