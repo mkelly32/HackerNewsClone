@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 const Hostname = styled.div`
   height: 1.2rem;
   font-size: 1rem;
-  font-color: var(--secondary-light);
+  color: var(--primary-two);
 `;
 
 type Props = { url: string };

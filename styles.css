@@ -7,10 +7,19 @@ body {
 :root {
   --black: #000000;
   --white: #ffffff;
-  --primary-dark: #0094c6;
-  --primary-light: #d8d0c1;
-  --secondary-dark: #005e7c;
-  --secondary-light: #e0d3de;
+
+  --border-small: 4px;
+
+  --padding-small: 6px;
+  --padding-medium: 12px;
+
+  --comment-margin: 12px;
+
+  --background-one: #96a4c1;
+  --background-two: #fff5e6;
+  --primary-dark: #375597;
+  --primary-two: #71139b;
+  --secondary-one: #e6bf95;
 }
 
 * {

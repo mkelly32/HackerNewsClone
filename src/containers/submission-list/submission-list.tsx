@@ -7,14 +7,16 @@ import { getTopStories } from "../../utilities/submission.utils";
 const ListOfSubmissions = styled.ul`
   display: flex;
   flex-direction: column;
-
-  gap: 6px;
+  gap: var(--padding-medium);
 
   height: 100%;
 
   margin: 0;
-  padding: 0;
-  border: 1px solid var(--black);
+  padding: var(--padding-small);
+
+  border: 1px solid var(--secondary-one);
+  border-radius: var(--border-small);
+  background-color: var(--background-one);
 
   overflow: auto;
 `;
@@ -23,7 +25,7 @@ const SubmissionView = styled.div`
   width: 70vw;
   padding: 20px 5px 20px 10px;
 
-  background-color: var(--secondary-light);
+  background-color: var(--primary-dark);
 `;
 /**
  *  Renders a list of Hacker News submisisons (Story, Ask, Poll, Job)

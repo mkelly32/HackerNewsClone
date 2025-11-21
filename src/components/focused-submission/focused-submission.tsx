@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { HNItem } from "../../types/data";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { decodeHtml } from "../../types/utils";
 
 const Submission = styled.button`
   background: none;
-  background-color: var(--primary-light);
+  background-color: var(--background-two);
 
+  width: 100%;
   padding: 5px;
-  margin: 10px 5px;
-  border: 1px solid var(--black);
-  border-radius: 4px;
+  margin-bottom: var(--comment-margin);
+  border: 1px solid var(--secondary-one);
+  border-radius: var(--border-small);
 
   overflow-wrap: anywhere;
 `;
@@ -34,7 +36,10 @@ type Props = { submission: HNItem; action: (submission: HNItem) => void };
 export const FocusedSubmission: FC<Props> = ({ submission, action }) => {
   const title = submission?.title ?? "";
   const author = submission.by ?? "";
-  const text = submission?.text ?? "";
+  const decodedText = useMemo(() => {
+    const encodedText = submission?.text ?? "";
+    return decodeHtml(encodedText);
+  }, [submission]);
   const clickHandler = () => action(submission);
   return (
     <Submission onClick={clickHandler}>
@@ -42,7 +47,7 @@ export const FocusedSubmission: FC<Props> = ({ submission, action }) => {
         {title}
         <Author>{author}</Author>
       </Header>
-      <Body>{text}</Body>
+      <Body>{decodedText}</Body>
     </Submission>
   );
 };

@@ -11,10 +11,12 @@ const Meta = styled.div`
   padding: 0;
 
   font-size: 1.2rem;
+  color: var(--primary-two);
 `;
 
 const Author = styled.span`
   color: var(--black);
+  padding-left: 4px;
 `;
 const ScoreDecoration = styled.span`
   display: flex;
@@ -22,7 +24,8 @@ const ScoreDecoration = styled.span`
   height: 2.2rem;
   width: 2.2rem;
   margin-left: auto;
-  background-color: var(--secondary-dark);
+
+  border: 1px solid var(--secondary-one);
   border-radius: 50%;
 
   &.bigScore {
@@ -31,7 +34,7 @@ const ScoreDecoration = styled.span`
 `;
 const Score = styled.span`
   margin: auto;
-  color: var(--white);
+  color: var(--primary-two);
 `;
 
 type Props = {
@@ -54,7 +57,7 @@ export const SubmissionMeta: FC<Props> = ({
     <>
       <Domain url={url} />
       <Meta>
-        <Author>by: {author}</Author>
+        by:<Author>{author}</Author>
         <SubmissionTime submissionTime={submissionTime} />
         <ScoreDecoration className={scoreAdditionalStyles}>
           <Score>{score}</Score>

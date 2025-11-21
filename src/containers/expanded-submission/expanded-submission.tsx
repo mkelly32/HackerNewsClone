@@ -19,25 +19,39 @@ const DetailedView = styled.div`
 
   padding: 20px 10px 20px 5px;
 
-  background-color: var(--secondary-light);
+  background-color: var(--primary-dark);
 `;
 
-const SelectedComments = styled.div`
-  padding: 5px;
-  background-color: var(--white);
-`;
+const SelectedComments = styled.div``;
 
 const CommentList = styled.div`
   overflow: auto;
   height: 100%;
 
-  border: 1px solid var(--black);
+  padding: var(--padding-small);
+
+  border: 1px solid var(--secondary-one);
+  border-radius: var(--border-small);
+
+  background-color: var(--background-one);
 `;
 
 const NoFocusedSubmission = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 20px;
+
+  padding: var(--padding-medium);
+  border-radius: var(--border-small);
   background-color: var(--white);
+`;
+
+const NoSubmissionSelected = styled.div`
+  margin-top: auto;
+  margin-bottom: auto;
+
+  font-size: 2rem;
+  text-align: center;
 `;
 
 export const ExpandedSubmission: FC<Props> = () => {
@@ -114,36 +128,44 @@ export const ExpandedSubmission: FC<Props> = () => {
 
   return (
     <DetailedView>
-      <IfElse
-        condition={isTruthy(submission)}
-        then={
-          <CommentList>
-            <FocusedSubmission
-              submission={submission!}
-              action={goBackInCommentPath}
-            ></FocusedSubmission>
-            <SelectedComments>
-              {commentPath.map((comment) => (
-                <Comment
-                  key={comment.id}
-                  comment={comment}
-                  action={goBackInCommentPath}
-                />
-              ))}
-            </SelectedComments>
-            {children.map((id) => {
-              return (
-                <Comment
-                  key={id}
-                  comment={commentCache[id]}
-                  action={selectComment}
-                />
-              );
-            })}
-          </CommentList>
-        }
-        else={<NoFocusedSubmission>No submission loaded</NoFocusedSubmission>}
-      />
+      <CommentList>
+        <IfElse
+          condition={isTruthy(submission)}
+          then={
+            <>
+              <FocusedSubmission
+                submission={submission!}
+                action={goBackInCommentPath}
+              ></FocusedSubmission>
+              <SelectedComments>
+                {commentPath.map((comment) => (
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                    selected={true}
+                    action={goBackInCommentPath}
+                  />
+                ))}
+              </SelectedComments>
+              {children.map((id) => {
+                return (
+                  <Comment
+                    key={id}
+                    comment={commentCache[id]}
+                    selected={false}
+                    action={selectComment}
+                  />
+                );
+              })}
+            </>
+          }
+          else={
+            <NoFocusedSubmission>
+              <NoSubmissionSelected>No submission loaded</NoSubmissionSelected>
+            </NoFocusedSubmission>
+          }
+        />
+      </CommentList>
     </DetailedView>
   );
 };

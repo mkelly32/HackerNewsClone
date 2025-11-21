@@ -6,18 +6,18 @@
 - [ ] [Feature] Add controls to focus Submission in Iframe view
 - [ ] [Task] Style ExpandedSubmission
 ## Todo
-- [ ] [Task] Style Submisssion Score
-- [ ] [Task] Style Submission Author
-- [ ] [Task] Style Submission Descendants
-- [ ] [Task] Style Comment Component
-- [ ] [Task] Style Focused Submission
 ## In Progress
 - [ ] [Task] Start figma design
 - [ ] [Feature] Decode HNItem text
-- [ ] [Task] Style CommentPath
 ## Done
+- [ ] [Task] Style Submission Descendants
+- [ ] [Task] Style Submission Author
+- [ ] [Task] Style Submisssion Score
 - [ ] [Feature] Add Header Component
 - [ ] [Feature] Add Comment component
+- [ ] [Task] Style Focused Submission
+- [ ] [Task] Style Comment Component
+- [ ] [Task] Style CommentPath
 - [ ] [Feature] Add controls to focus a comment in Detailed View
 - [ ] [Feature] Add focused submission to ExpandedSubmission
 - [ ] [Feature] Add Tree View of selected comments to ExpandedSubmission

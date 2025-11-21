@@ -26,7 +26,9 @@ const Title = styled.a`
 const Descendents = styled.span`
   margin-left: auto;
   padding-left: 10px;
+
   font-size: 1.2rem;
+  color: var(--primary-two);
   white-space: nowrap;
 `;
 

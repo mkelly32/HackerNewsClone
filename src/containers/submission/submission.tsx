@@ -14,11 +14,11 @@ const SubmissionElement = styled.li`
   min-height: 8rem;
   height: 8rem;
 
-  margin: 5px 10px;
+  margin: 0;
 
-  background-color: var(--primary-light);
-  border-radius: 5px;
-  border: 1px solid var(--secondary-dark);
+  background-color: var(--background-two);
+  border-radius: var(--border-small);
+  border: 1px solid var(--secondary-one);
 `;
 
 const LoadedSubmission = styled.div`
@@ -34,21 +34,26 @@ const Submission = styled.div`
   min-width: 0;
   width: 100%;
 
-  padding: 20px;
+  padding: var(--padding-medium);
 
-  text-align: left;
+  text-align: start;
 `;
-const SubmissionActions = styled.div`
-  button {
-    height: 100%;
-  }
+const SubmissionActions = styled.button`
+  height: 100%;
+
+  background-color: var(--secondary-one);
+  border: none;
 `;
 
-const UnloadedSubmission = styled.div`
-  font-size: 2.5rem;
+const SubmissionLoading = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
+  width: 100%;
+
+  font-size: 2.5rem;
+  text-align: center;
 `;
 
 type Props = { id: number; container: RefObject<Nullable<HTMLUListElement>> };
@@ -69,7 +74,6 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
 
   const focusSubmission = useCallback(() => {
     if (item) {
-      console.log("Setting item as focused");
       setFocused(item);
     } else {
       console.log(
@@ -125,7 +129,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
     <SubmissionElement ref={submissionElement}>
       <IfElse
         condition={!item}
-        then={<UnloadedSubmission>Loading...</UnloadedSubmission>}
+        then={<SubmissionLoading>Loading...</SubmissionLoading>}
         else={
           <LoadedSubmission>
             <Submission>
@@ -141,8 +145,8 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
                 url={url}
               />
             </Submission>
-            <SubmissionActions>
-              <button onClick={focusSubmission}>View</button>
+            <SubmissionActions onClick={focusSubmission}>
+              View
             </SubmissionActions>
           </LoadedSubmission>
         }

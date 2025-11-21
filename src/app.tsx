@@ -3,6 +3,7 @@ import { SubmissionList } from "./containers/submission-list";
 import { FocusedSubmissionProvider } from "./providers/focused-submission";
 import styled from "styled-components";
 import { ExpandedSubmission } from "./containers/expanded-submission/expanded-submission";
+import { Header } from "./containers/header";
 
 const AppView = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const AppView = styled.div`
 export const App: FC = () => {
   return (
     <FocusedSubmissionProvider>
+      <Header />
       <AppView>
         <SubmissionList />
         <ExpandedSubmission />
