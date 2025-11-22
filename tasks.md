@@ -1,17 +1,19 @@
 # Project Name
 ## Backlog
-- [ ] [Task] Style Submission List Component
 - [ ] [Feature]: Add IFrame view for Submisison url
 - [ ] [Feature] Add toolbar to elements with hidden overflow
 - [ ] [Feature] Add controls to focus Submission in Iframe view
-- [ ] [Task] Style ExpandedSubmission
 ## Todo
 ## In Progress
 - [ ] [Task] Start figma design
-- [ ] [Feature] Decode HNItem text
 ## Done
+- [ ] [Task] Style ExpandedSubmission
+- [ ] [Task] Style Submission List Component
 - [ ] [Task] Style Submission Descendants
+- [ ] [Feature] Decode HNItem text
+- [ ] [Feature] Add Header with page filters
 - [ ] [Task] Style Submission Author
+- [ ] [Task] Move submisison fetch logic into PageContext provider
 - [ ] [Task] Style Submisssion Score
 - [ ] [Feature] Add Header Component
 - [ ] [Feature] Add Comment component

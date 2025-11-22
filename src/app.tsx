@@ -1,25 +1,32 @@
 import { FC } from "react";
 import { SubmissionList } from "./containers/submission-list";
 import { FocusedSubmissionProvider } from "./providers/focused-submission";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import { ExpandedSubmission } from "./containers/expanded-submission/expanded-submission";
 import { Header } from "./containers/header";
 import { PageContext } from "./providers/page-context";
 
 const AppView = styled.div`
-  display: flex;
-  width: 100%;
   height: 100vh;
+  width: 100%;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  height: calc(100vh - 1.5rem);
+  width: 100%;
 `;
 
 export const App: FC = () => {
   return (
     <PageContext>
       <FocusedSubmissionProvider>
-        <Header />
         <AppView>
-          <SubmissionList />
-          <ExpandedSubmission />
+          <Header />
+          <MainContent>
+            <SubmissionList />
+            <ExpandedSubmission />
+          </MainContent>
         </AppView>
       </FocusedSubmissionProvider>
     </PageContext>

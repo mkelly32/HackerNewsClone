@@ -200,9 +200,18 @@ export const PageContext: FC<Props> = ({ children }) => {
         default:
           return null as never;
       }
-      setFilter(filter);
+      setFilter(type);
     },
-    [topSubmissions],
+    [
+      topSubmissions,
+      topSubmissions,
+      bestSubmissions,
+      newSubmissions,
+      pastSubmissions,
+      askSubmissions,
+      showSubmissions,
+      jobSubmissions,
+    ],
   );
 
   useEffect(() => {
@@ -216,6 +225,9 @@ export const PageContext: FC<Props> = ({ children }) => {
     switch (filter) {
       case "top":
         setSelected(topSubmissions);
+        break;
+      case "best":
+        setSelected(bestSubmissions);
         break;
       case "new":
         setSelected(newSubmissions);
@@ -235,7 +247,18 @@ export const PageContext: FC<Props> = ({ children }) => {
       default:
         return null as never;
     }
-  }, [filter, topSubmissions]);
+  }, [
+    filter,
+    topSubmissions,
+    newSubmissions,
+    pastSubmissions,
+    askSubmissions,
+    jobSubmissions,
+  ]);
+
+  useEffect(() => {
+    console.log(loading, filter);
+  }, [loading, filter]);
 
   const context = useMemo<PageContextValue>(
     () => ({
