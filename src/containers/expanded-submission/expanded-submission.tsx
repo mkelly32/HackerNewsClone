@@ -15,7 +15,7 @@ type CommentCache = {
 
 const DetailedView = styled.div`
   width: 30vw;
-  height: 100vh;
+  height: 100%;
 
   padding: 20px 10px 20px 5px;
 
@@ -118,6 +118,11 @@ export const ExpandedSubmission: FC<Props> = () => {
 
     setChildren(commentPath[commentDepth - 1]?.kids ?? []);
   }, [submission, commentPath]);
+
+  //  Reset selected comments when submission changes
+  useEffect(() => {
+    setCommentPath([]);
+  }, [submission]);
 
   useEffect(() => {
     const commentsToFetch = children.filter((id) => {
