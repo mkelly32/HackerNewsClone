@@ -15,3 +15,12 @@ export type HNItem = {
   parts?: number[];
   descendants?: number;
 };
+
+export type SubmissionFilters =
+  | "top"
+  | "best"
+  | "new"
+  | "past"
+  | "ask"
+  | "show"
+  | "jobs";

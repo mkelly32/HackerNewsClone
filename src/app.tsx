@@ -4,6 +4,7 @@ import { FocusedSubmissionProvider } from "./providers/focused-submission";
 import styled from "styled-components";
 import { ExpandedSubmission } from "./containers/expanded-submission/expanded-submission";
 import { Header } from "./containers/header";
+import { PageContext } from "./providers/page-context";
 
 const AppView = styled.div`
   display: flex;
@@ -13,12 +14,14 @@ const AppView = styled.div`
 
 export const App: FC = () => {
   return (
-    <FocusedSubmissionProvider>
-      <Header />
-      <AppView>
-        <SubmissionList />
-        <ExpandedSubmission />
-      </AppView>
-    </FocusedSubmissionProvider>
+    <PageContext>
+      <FocusedSubmissionProvider>
+        <Header />
+        <AppView>
+          <SubmissionList />
+          <ExpandedSubmission />
+        </AppView>
+      </FocusedSubmissionProvider>
+    </PageContext>
   );
 };

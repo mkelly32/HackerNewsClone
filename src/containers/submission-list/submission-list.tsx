@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { SubmissionItem } from "../submission";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import { Nullable } from "../../types/utils";
-import { getTopStories } from "../../utilities/submission.utils";
+import { usePageContext } from "../../providers/page-context";
 
 const ListOfSubmissions = styled.ul`
   display: flex;
@@ -32,38 +32,12 @@ const SubmissionView = styled.div`
  */
 export const SubmissionList: FC = () => {
   const list = useRef<Nullable<HTMLUListElement>>(null);
-  const topStoriesFetched = useRef(false);
-  const [loading, setLoading] = useState(false);
-  const [topStories, setTopStories] = useState([]);
-
-  const fetchSubmissions = useCallback(() => {
-    if (!loading) {
-      fetch(getTopStories())
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Data: ", data);
-          setTopStories(data);
-        })
-        .catch((error) => {
-          console.log(`Error fetching top stories: `, error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    if (!topStoriesFetched.current) {
-      fetchSubmissions();
-      topStoriesFetched.current = true;
-    }
-  }, [fetchSubmissions]);
+  const { selected } = usePageContext();
 
   return (
     <SubmissionView>
       <ListOfSubmissions ref={list}>
-        {topStories.slice(0, 20).map((id) => {
+        {selected.map((id) => {
           return <SubmissionItem id={id} key={id} container={list} />;
         })}
       </ListOfSubmissions>
