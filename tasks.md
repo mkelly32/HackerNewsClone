@@ -6,8 +6,10 @@
 ## Todo
 ## In Progress
 - [ ] [Task] Start figma design
+- [ ] [Feature] Support authentication
 ## Done
 - [ ] [Task] Style ExpandedSubmission
+- [ ] [Bugfix] Reset comment path on submission change in ExpandedSubmission
 - [ ] [Task] Style Submission List Component
 - [ ] [Task] Style Submission Descendants
 - [ ] [Feature] Decode HNItem text
