@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import { ExpandedSubmission } from "./containers/expanded-submission/expanded-submission";
 import { Header } from "./containers/header";
 import { PageContext } from "./providers/page-context";
+import { AuthProvider } from "./providers/auth";
 
 const AppView = styled.div`
   height: 100vh;
@@ -19,16 +20,18 @@ const MainContent = styled.div`
 
 export const App: FC = () => {
   return (
-    <PageContext>
-      <FocusedSubmissionProvider>
-        <AppView>
-          <Header />
-          <MainContent>
-            <SubmissionList />
-            <ExpandedSubmission />
-          </MainContent>
-        </AppView>
-      </FocusedSubmissionProvider>
-    </PageContext>
+    <AuthProvider>
+      <PageContext>
+        <FocusedSubmissionProvider>
+          <AppView>
+            <Header />
+            <MainContent>
+              <SubmissionList />
+              <ExpandedSubmission />
+            </MainContent>
+          </AppView>
+        </FocusedSubmissionProvider>
+      </PageContext>
+    </AuthProvider>
   );
 };

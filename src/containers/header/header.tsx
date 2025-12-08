@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { styled } from "styled-components";
 import { usePageContext } from "../../providers/page-context";
+import { useAuthContext } from "../../providers/auth";
 
 const Banner = styled.header`
   display: flex;
@@ -77,6 +78,7 @@ type Props = {};
 
 export const Header: FC<Props> = ({}) => {
   const { selectFilter } = usePageContext();
+  const { setModalOpen } = useAuthContext();
 
   const selectTop = () => selectFilter("top");
   const selectBest = () => selectFilter("best");
@@ -104,7 +106,7 @@ export const Header: FC<Props> = ({}) => {
         <Filter onClick={selectJobs}>Jobs</Filter>
       </Center>
       <Right>
-        <Login>Login</Login>
+        <Login onClick={() => setModalOpen(true)}>Login</Login>
       </Right>
     </Banner>
   );
