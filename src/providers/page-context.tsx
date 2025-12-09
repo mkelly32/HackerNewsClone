@@ -256,10 +256,6 @@ export const PageContext: FC<Props> = ({ children }) => {
     jobSubmissions,
   ]);
 
-  useEffect(() => {
-    console.log(loading, filter);
-  }, [loading, filter]);
-
   const context = useMemo<PageContextValue>(
     () => ({
       selected,

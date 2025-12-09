@@ -3,10 +3,11 @@
 - [ ] [Feature]: Add IFrame view for Submisison url
 - [ ] [Feature] Add toolbar to elements with hidden overflow
 - [ ] [Feature] Add controls to focus Submission in Iframe view
+- [ ] [Task] Add dedicated logger
+- [ ] [Task] Add error handling
 ## Todo
 ## In Progress
 - [ ] [Task] Start figma design
-- [ ] [Feature] Support authentication
 ## Done
 - [ ] [Task] Style ExpandedSubmission
 - [ ] [Bugfix] Reset comment path on submission change in ExpandedSubmission
@@ -46,3 +47,4 @@
 - [ ] [Task] Fetch initial results page
 ## Iced
 - [ ] [Task] Transform comments from markup into Comment Type [Reason] No longer need to parse comments as they are fetched from hacker news firebase api
+- [ ] [Feature] Support authentication [Reason] Auth will require a backend

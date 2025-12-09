@@ -78,7 +78,6 @@ type Props = {};
 
 export const Header: FC<Props> = ({}) => {
   const { selectFilter } = usePageContext();
-  const { setModalOpen } = useAuthContext();
 
   const selectTop = () => selectFilter("top");
   const selectBest = () => selectFilter("best");
@@ -105,9 +104,7 @@ export const Header: FC<Props> = ({}) => {
         <Filter onClick={selectShow}>Show</Filter>
         <Filter onClick={selectJobs}>Jobs</Filter>
       </Center>
-      <Right>
-        <Login onClick={() => setModalOpen(true)}>Login</Login>
-      </Right>
+      <Right></Right>
     </Banner>
   );
 };
