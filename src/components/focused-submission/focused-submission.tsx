@@ -3,8 +3,7 @@ import { HNItem } from "../../types/data";
 import { FC, useMemo } from "react";
 import { decodeHtml } from "../../types/utils";
 
-const Submission = styled.button`
-  background: none;
+const Submission = styled.div`
   background-color: var(--background-two);
 
   width: 100%;
@@ -31,18 +30,17 @@ const Body = styled.div`
   margin-top: 15px;
 `;
 
-type Props = { submission: HNItem; action: (submission: HNItem) => void };
+type Props = { submission: HNItem };
 
-export const FocusedSubmission: FC<Props> = ({ submission, action }) => {
+export const FocusedSubmission: FC<Props> = ({ submission }) => {
   const title = submission?.title ?? "";
   const author = submission.by ?? "";
   const decodedText = useMemo(() => {
     const encodedText = submission?.text ?? "";
     return decodeHtml(encodedText);
   }, [submission]);
-  const clickHandler = () => action(submission);
   return (
-    <Submission onClick={clickHandler}>
+    <Submission>
       <Header>
         {title}
         <Author>{author}</Author>

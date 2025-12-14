@@ -7,9 +7,9 @@
 - [ ] [Task] Add error handling
 ## Todo
 ## In Progress
-- [ ] [Task] Start figma design
 ## Done
 - [ ] [Task] Style ExpandedSubmission
+- [ ] [Task] Redesign comment chains
 - [ ] [Bugfix] Reset comment path on submission change in ExpandedSubmission
 - [ ] [Task] Style Submission List Component
 - [ ] [Task] Style Submission Descendants
@@ -46,5 +46,6 @@
 - [ ] [Task] Make Submission Type
 - [ ] [Task] Fetch initial results page
 ## Iced
+- [ ] [Task] Start figma design [Reason] its boring. will return to it
 - [ ] [Task] Transform comments from markup into Comment Type [Reason] No longer need to parse comments as they are fetched from hacker news firebase api
 - [ ] [Feature] Support authentication [Reason] Auth will require a backend

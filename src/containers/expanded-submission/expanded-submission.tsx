@@ -1,17 +1,14 @@
 import { FC, useRef, useEffect, useCallback, useMemo, useState } from "react";
 import { styled } from "styled-components";
-import { HNItem } from "../../types/data";
 import { getHackerNewsItem } from "../../utilities/submission.utils";
 import { useFocusedSubmissionContext } from "../../providers/focused-submission";
-import { Comment } from "../../components/comment";
+import { Comment } from "../comment";
 import { IfElse } from "../../utilities/jsx-utils";
 import { isTruthy } from "../../types/utils";
 import { FocusedSubmission } from "../../components/focused-submission";
+import { CommentCache } from "../../types/comment-cache";
 
 type Props = {};
-type CommentCache = {
-  [id: number]: HNItem;
-};
 
 const DetailedView = styled.div`
   width: 30vw;
@@ -21,8 +18,6 @@ const DetailedView = styled.div`
 
   background-color: var(--primary-dark);
 `;
-
-const SelectedComments = styled.div``;
 
 const CommentList = styled.div`
   overflow: auto;
@@ -58,8 +53,7 @@ export const ExpandedSubmission: FC<Props> = () => {
   const { focused: submission } = useFocusedSubmissionContext();
   const loading = useRef<number[]>([]);
   const [commentCache, setCommentCache] = useState<CommentCache>({});
-  const [commentPath, setCommentPath] = useState<HNItem[]>([]);
-  const [children, setChildren] = useState<number[]>([]);
+  const children = useMemo(() => submission?.kids ?? [], [submission]);
 
   const fetchComment = useCallback((id: number) => {
     if (!loading.current.includes(id)) {
@@ -84,46 +78,6 @@ export const ExpandedSubmission: FC<Props> = () => {
     }
   }, []);
 
-  const selectComment = useCallback(
-    (comment: HNItem) => setCommentPath((path) => [...path, comment]),
-    [],
-  );
-
-  const goBackInCommentPath = useCallback(
-    (item: HNItem) => {
-      const commentPathIndex = commentPath.findIndex(
-        (comment) => comment.id === item.id,
-      );
-      if (commentPathIndex === -1) {
-        setCommentPath([]);
-        return;
-      }
-
-      setCommentPath((path) => path.slice(0, commentPathIndex + 1));
-    },
-    [commentPath],
-  );
-
-  useEffect(() => {
-    if (!isTruthy(submission)) {
-      setChildren([]);
-      return;
-    }
-
-    const commentDepth = commentPath.length;
-    if (commentDepth === 0) {
-      setChildren(submission?.kids ?? []);
-      return;
-    }
-
-    setChildren(commentPath[commentDepth - 1]?.kids ?? []);
-  }, [submission, commentPath]);
-
-  //  Reset selected comments when submission changes
-  useEffect(() => {
-    setCommentPath([]);
-  }, [submission]);
-
   useEffect(() => {
     const commentsToFetch = children.filter((id) => {
       return !(id in commentCache) && !loading.current.includes(id);
@@ -138,30 +92,16 @@ export const ExpandedSubmission: FC<Props> = () => {
           condition={isTruthy(submission)}
           then={
             <>
-              <FocusedSubmission
-                submission={submission!}
-                action={goBackInCommentPath}
-              ></FocusedSubmission>
-              <SelectedComments>
-                {commentPath.map((comment) => (
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    selected={true}
-                    action={goBackInCommentPath}
-                  />
-                ))}
-              </SelectedComments>
-              {children.map((id) => {
-                return (
-                  <Comment
-                    key={id}
-                    comment={commentCache[id]}
-                    selected={false}
-                    action={selectComment}
-                  />
-                );
-              })}
+              <FocusedSubmission submission={submission!}></FocusedSubmission>
+              {children.map((id) => (
+                <Comment
+                  key={id}
+                  id={id}
+                  cache={commentCache}
+                  fetchComment={fetchComment}
+                  reply={false}
+                />
+              ))}
             </>
           }
           else={
