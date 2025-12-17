@@ -33,6 +33,7 @@ const Header = styled.div<CSSProps>`
 `;
 const Body = styled.button`
   width: 100%;
+  max-width: 100%;
 
   background: none;
   background-color: var(--background-two);
@@ -45,6 +46,18 @@ const Body = styled.button`
 
   font-size: 1rem;
   text-align: start;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+
+  * {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+  }
 `;
 
 const Footer = styled.div<CSSProps>`

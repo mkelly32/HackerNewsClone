@@ -9,6 +9,7 @@
 ## In Progress
 ## Done
 - [ ] [Task] Style ExpandedSubmission
+- [ ] [Bugfix] Prevent code block overflow in comments
 - [ ] [Bugfix] Remove vite proxy server as it does not work when deployed
 - [ ] [Task] Redesign comment chains
 - [ ] [Bugfix] Reset comment path on submission change in ExpandedSubmission
