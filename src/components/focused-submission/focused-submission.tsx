@@ -23,7 +23,6 @@ const Header = styled.div`
 `;
 const Author = styled.div`
   font-size: 1rem;
-
   text-align: end;
 `;
 const Body = styled.div`
@@ -35,17 +34,18 @@ type Props = { submission: HNItem };
 export const FocusedSubmission: FC<Props> = ({ submission }) => {
   const title = submission?.title ?? "";
   const author = submission.by ?? "";
-  const decodedText = useMemo(() => {
-    const encodedText = submission?.text ?? "";
-    return decodeHtml(encodedText);
+
+  const submissionTextHtml = useMemo(() => {
+    return { __html: submission?.text ?? "" };
   }, [submission]);
+
   return (
     <Submission>
       <Header>
         {title}
         <Author>{author}</Author>
       </Header>
-      <Body>{decodedText}</Body>
+      <Body dangerouslySetInnerHTML={submissionTextHtml}></Body>
     </Submission>
   );
 };

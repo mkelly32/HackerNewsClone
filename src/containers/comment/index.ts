@@ -1,1 +1,1 @@
-export { Comment } from "./comment-chain";
+export { Comment } from "./comment";
