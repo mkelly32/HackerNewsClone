@@ -11,7 +11,7 @@ import { Nullable } from "../types/utils";
 
 type FocusedSubmissionContextValue = {
   focused: Nullable<HNItem>;
-  setFocused: (submission: HNItem) => void;
+  setFocused: React.Dispatch<React.SetStateAction<Nullable<HNItem>>>;
 };
 const FocusedSubmissionContext = createContext<FocusedSubmissionContextValue>({
   focused: null,

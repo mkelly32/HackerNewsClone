@@ -8,6 +8,7 @@
 ## Todo
 ## In Progress
 ## Done
+- [ ] Convert AppView from fixed VW units to flex grow
 - [ ] [Task] Style ExpandedSubmission
 - [ ] [Bugfix] Prevent code block overflow in comments
 - [ ] [Bugfix] Remove vite proxy server as it does not work when deployed

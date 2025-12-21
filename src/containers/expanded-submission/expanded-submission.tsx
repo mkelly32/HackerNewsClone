@@ -11,7 +11,9 @@ import { CommentCache } from "../../types/comment-cache";
 type Props = {};
 
 const DetailedView = styled.div`
-  width: 30vw;
+  flex-basis: 200px;
+  width: 100%;
+  flex-grow: 1;
   height: 100%;
 
   padding: 20px 10px 20px 5px;
@@ -86,11 +88,11 @@ export const ExpandedSubmission: FC<Props> = () => {
   }, [children, commentCache]);
 
   return (
-    <DetailedView>
-      <CommentList>
-        <IfElse
-          condition={isTruthy(submission)}
-          then={
+    <IfElse
+      condition={isTruthy(submission)}
+      then={
+        <DetailedView>
+          <CommentList>
             <>
               <FocusedSubmission submission={submission!}></FocusedSubmission>
               {children.map((id) => (
@@ -103,14 +105,15 @@ export const ExpandedSubmission: FC<Props> = () => {
                 />
               ))}
             </>
-          }
-          else={
-            <NoFocusedSubmission>
-              <NoSubmissionSelected>No submission loaded</NoSubmissionSelected>
-            </NoFocusedSubmission>
-          }
-        />
-      </CommentList>
-    </DetailedView>
+          </CommentList>
+        </DetailedView>
+      }
+      else={
+        null
+        // <NoFocusedSubmission>
+        //   <NoSubmissionSelected>No submission loaded</NoSubmissionSelected>
+        // </NoFocusedSubmission>
+      }
+    />
   );
 };

@@ -3,6 +3,7 @@ import { SubmissionItem } from "../submission";
 import { FC, useRef } from "react";
 import { Nullable } from "../../types/utils";
 import { usePageContext } from "../../providers/page-context";
+import { useFocusedSubmissionContext } from "../../providers/focused-submission";
 
 const ListOfSubmissions = styled.ul`
   display: flex;
@@ -21,8 +22,16 @@ const ListOfSubmissions = styled.ul`
   overflow: auto;
 `;
 
-const SubmissionView = styled.div`
-  width: 70vw;
+type SubmissionViewProps = {
+  submissionFocused: boolean;
+};
+
+const SubmissionView = styled.div<SubmissionViewProps>`
+  flex-basis: 800px;
+  min-width: 800px;
+  max-width: ${(props) => (props.submissionFocused ? "60vw" : "100%")};
+  width: 100%;
+  flex-grow: 1;
   padding: 20px 5px 20px 10px;
 
   background-color: var(--primary-dark);
@@ -32,10 +41,11 @@ const SubmissionView = styled.div`
  */
 export const SubmissionList: FC = () => {
   const list = useRef<Nullable<HTMLUListElement>>(null);
+  const { focused } = useFocusedSubmissionContext();
   const { selected } = usePageContext();
 
   return (
-    <SubmissionView>
+    <SubmissionView submissionFocused={Boolean(focused)}>
       <ListOfSubmissions ref={list}>
         {selected.map((id) => {
           return <SubmissionItem id={id} key={id} container={list} />;

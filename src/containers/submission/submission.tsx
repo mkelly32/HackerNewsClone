@@ -74,7 +74,13 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
 
   const focusSubmission = useCallback(() => {
     if (item) {
-      setFocused(item);
+      setFocused((prev) => {
+        if (prev?.id === item.id) {
+          return null;
+        } else {
+          return item;
+        }
+      });
     } else {
       console.log(
         "Submission Component: Tried to focus non existing submission!",

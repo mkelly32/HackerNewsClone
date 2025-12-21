@@ -22,7 +22,7 @@ const CommentElement = styled.div<CSSProps>`
 const Header = styled.div<CSSProps>`
   font-size: 1.5rem;
   text-align: end;
-  color: ${(props) => (props.selected ? "var(--white)" : "var(--black)")};
+  color: var(--black);
 
   margin-top: auto;
   margin-bottom: auto;
@@ -111,6 +111,7 @@ export const Comment: FC<Props> = ({ id, cache, fetchComment, reply }) => {
   const author = comment?.by ?? "";
   const descendants = comment?.kids?.length;
   const commentHasReplies = isTruthy(descendants);
+  const showHideCommentsText = selected ? "Hide Replies" : "Show Replies";
   const descendantsText =
     descendants === 1
       ? `${descendants} descendant`
@@ -144,7 +145,7 @@ export const Comment: FC<Props> = ({ id, cache, fetchComment, reply }) => {
                         reply={reply}
                         onClick={clickHandler}
                       >
-                        View Replies
+                        {showHideCommentsText}
                       </ShowReplies>
                       {descendantsText}
                     </>
