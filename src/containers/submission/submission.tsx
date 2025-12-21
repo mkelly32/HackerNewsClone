@@ -58,7 +58,7 @@ const SubmissionLoading = styled.div`
 
 type Props = { id: number; container: RefObject<Nullable<HTMLUListElement>> };
 export const SubmissionItem: FC<Props> = ({ id, container }) => {
-  const { setFocused } = useFocusedSubmissionContext();
+  const { focusSubmission } = useFocusedSubmissionContext();
   const submissionElement = useRef<HTMLLIElement>(null);
   const observer = useRef<IntersectionObserver>(null);
   const [item, setItem] = useState<Nullable<HNItem>>(null);
@@ -72,15 +72,9 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
   const descendants = item?.descendants ?? 0;
   const time = item?.time ?? 0;
 
-  const focusSubmission = useCallback(() => {
+  const setFocused = useCallback(() => {
     if (item) {
-      setFocused((prev) => {
-        if (prev?.id === item.id) {
-          return null;
-        } else {
-          return item;
-        }
-      });
+      focusSubmission(item);
     } else {
       console.log(
         "Submission Component: Tried to focus non existing submission!",
@@ -151,9 +145,7 @@ export const SubmissionItem: FC<Props> = ({ id, container }) => {
                 url={url}
               />
             </Submission>
-            <SubmissionActions onClick={focusSubmission}>
-              View
-            </SubmissionActions>
+            <SubmissionActions onClick={setFocused}>View</SubmissionActions>
           </LoadedSubmission>
         }
       />
