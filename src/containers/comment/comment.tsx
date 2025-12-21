@@ -31,18 +31,16 @@ const Header = styled.div<CSSProps>`
 
   background-color: var(--secondary-one);
 `;
-const Body = styled.button`
+const Body = styled.div`
   width: 100%;
   max-width: 100%;
 
-  background: none;
   background-color: var(--background-two);
 
   border: none;
   border-radius: 0px 0px var(--border-small) var(--border-small);
 
   padding: var(--padding-small);
-  margin: 0;
 
   font-size: 1rem;
   text-align: start;
@@ -131,10 +129,7 @@ export const Comment: FC<Props> = ({ id, cache, fetchComment, reply }) => {
               <Header selected={selected} reply={reply}>
                 {author}
               </Header>
-              <Body
-                dangerouslySetInnerHTML={commentTextHtml}
-                onClick={clickHandler}
-              />
+              <Body dangerouslySetInnerHTML={commentTextHtml} />
               <Footer selected={selected} reply={reply}>
                 <If
                   condition={commentHasReplies}
