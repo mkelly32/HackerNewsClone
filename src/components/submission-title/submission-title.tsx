@@ -20,14 +20,14 @@ const Title = styled.a`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;
 
 const Descendents = styled.span`
   margin-left: auto;
   padding-left: 10px;
 
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--primary-two);
   white-space: nowrap;
 `;

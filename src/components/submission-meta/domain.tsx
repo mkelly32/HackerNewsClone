@@ -2,8 +2,8 @@ import { FC } from "react";
 import { styled } from "styled-components";
 
 const Hostname = styled.div`
-  height: 1.2rem;
-  font-size: 1rem;
+  height: 1rem;
+  font-size: 0.8rem;
   color: var(--primary-two);
 `;
 

@@ -11,8 +11,8 @@ import { useFocusedSubmissionContext } from "../../providers/focused-submission"
 const SubmissionElement = styled.li`
   position: relative;
 
-  min-height: 8rem;
-  height: 8rem;
+  min-height: 6rem;
+  height: 6rem;
 
   margin: 0;
 

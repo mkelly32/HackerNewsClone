@@ -10,7 +10,7 @@ const Meta = styled.div`
   margin: 0;
   padding: 0;
 
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--primary-two);
 `;
 
@@ -29,8 +29,8 @@ const ScoreDecoration = styled.span`
   border-radius: 50%;
 
   &.bigScore {
-  height: 3rem;
-  width: 3rem;
+  height: 2.2rem;
+  width: 2.2rem;
 `;
 const Score = styled.span`
   margin: auto;

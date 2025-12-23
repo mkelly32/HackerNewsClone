@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { styled } from "styled-components";
 import { usePageContext } from "../../providers/page-context";
-import { useAuthContext } from "../../providers/auth";
 
 const Banner = styled.header`
   display: flex;
   align-items: center;
 
-  height: 1.5rem;
+  height: 1rem;
 `;
 const Left = styled.div`
   display: flex;
@@ -38,7 +37,7 @@ const SpecialText = styled.span`
   style: italic;
 `;
 const Icon = styled.button`
-  height: 1.5rem;
+  height: 1.1rem;
   background: none;
   margin: 0;
   padding: 0;

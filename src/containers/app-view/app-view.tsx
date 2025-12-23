@@ -12,7 +12,7 @@ const AppViewWrapper = styled.div`
 
 const MainContent = styled.div`
   display: flex;
-  height: calc(100vh - 1.5rem);
+  height: calc(100vh - 1rem);
   width: 100%;
 `;
 

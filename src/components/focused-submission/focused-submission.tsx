@@ -16,13 +16,13 @@ const Submission = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   padding: 4px;
   border-radius: 4px;
   background-color: var(--secondary-light);
 `;
 const Author = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: end;
 `;
 const Body = styled.div`
