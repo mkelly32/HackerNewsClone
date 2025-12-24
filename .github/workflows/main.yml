@@ -34,7 +34,6 @@ jobs:
       - name: Deploy to S3
         run: aws s3 sync ./dist s3://${{ secrets.MIKES_HACKER_NEWS_S3_BUCKET }} --delete # --delete removes old files
 
-      - name: Invalidate CloudFront (optional)
+      - name: Invalidate CloudFront
         if: success()
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.MIKES_HACKER_NEWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
-      # Optional: Invalidate CloudFront cache (add if using CloudFront)
