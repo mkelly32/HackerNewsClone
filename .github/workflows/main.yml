@@ -27,14 +27,14 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secret-context.MIKES_HACKER_NEWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secret-context.MIKES_HACKER_NEWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secret-context.MIKES_HACKER_NEWS_REGION }}
+          aws-access-key-id: ${{ secrets.MIKES_HACKER_NEWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.MIKES_HACKER_NEWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.MIKES_HACKER_NEWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync ./dist s3://${{ secret-context.MIKES_HACKER_NEWS_S3_BUCKET }} --delete # --delete removes old files
+        run: aws s3 sync ./dist s3://${{ secrets.MIKES_HACKER_NEWS_S3_BUCKET }} --delete # --delete removes old files
 
       - name: Invalidate CloudFront (optional)
         if: success()
-        run: aws cloudfront create-invalidation --distribution-id ${{ secret-context.MIKES_HACKER_NEWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.MIKES_HACKER_NEWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
       # Optional: Invalidate CloudFront cache (add if using CloudFront)
